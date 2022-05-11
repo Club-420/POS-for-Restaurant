@@ -52,3 +52,7 @@ ios/
 linux/ 
 web/ 
 windows/ 
+
+
+#do not add the api keys
+firebase_options.dart
