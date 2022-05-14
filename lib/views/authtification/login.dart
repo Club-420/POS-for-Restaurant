@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pos/auth/auth_exceptions.dart';
 import 'package:pos/auth/auth_service.dart';
 import 'package:pos/constants/routes.dart';
-import 'package:pos/views/authtification/verify.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -120,7 +119,6 @@ class _LoginViewState extends State<LoginView> {
                   final user = AuthService.firebase().currentUser;
                   if (user!.isEmailVerified) {
                     //route to worker or admin page
-                    print('this is working');
                     Navigator.of(context)
                         .pushNamedAndRemoveUntil(waiterRoute, (route) => false);
                   } else {

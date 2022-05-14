@@ -5,3 +5,7 @@ const String kitchenRoute = '/kitchen/';
 const String waiterRoute = '/waiter/';
 const String adminRoute = '/admin/';
 const String verifyRoute = '/verify/';
+const String billRoute = '/bill/';
+const String menuRoute = '/menu/';
+const String tableRoute = '/table/';
+const String settingRoute = '/setting/';

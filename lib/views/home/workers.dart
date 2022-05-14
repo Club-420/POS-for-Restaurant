@@ -46,6 +46,100 @@ class _WorkersViewState extends State<WorkersView> {
           )
         ],
       ),
+      body: SizedBox(
+        height: MediaQuery.of(context).size.height,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            InkWell(
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(tableRoute, (route) => false);
+              },
+              child: Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height / 3,
+                margin: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.teal,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.teal,
+                        offset: Offset(0, 1),
+                        blurRadius: 6,
+                      ),
+                    ]),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(
+                        Icons.room_service_outlined,
+                        color: Colors.white,
+                        size: 50,
+                      ),
+                      Text(
+                        'Serving',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(kitchenRoute, (route) => true);
+              },
+              child: Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height / 3,
+                margin: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.teal,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.teal,
+                        offset: Offset(0, 1),
+                        blurRadius: 6,
+                      )
+                    ]),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(
+                        Icons.soup_kitchen_outlined,
+                        color: Colors.white,
+                        size: 50,
+                      ),
+                      Text(
+                        'Kitchen',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

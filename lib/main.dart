@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:pos/auth/auth_service.dart';
 import 'package:pos/constants/routes.dart';
 import 'package:pos/views/authtification/verify.dart';
+import 'package:pos/views/chiefs/kitchen.dart';
 import 'package:pos/views/home/workers.dart';
+import 'package:pos/views/waiters/tables.dart';
 
 import 'views/authtification/login.dart';
 import 'views/authtification/register.dart';
-import 'views/home/admin.dart';
+import 'views/admin/admin.dart';
 import 'views/home/router.dart';
 
 void main() {
@@ -25,7 +27,10 @@ void main() {
       verifyRoute: (context) => const VerifyView(),
       loginRoute: (context) => const LoginView(),
       waiterRoute: (context) => const WorkersView(),
+      kitchenRoute: (context) => const KitchenView(),
       adminRoute: (context) => const AdminView(),
+      tableRoute: (context) => const TableView(),
+
     },
   ));
 }
