@@ -30,7 +30,6 @@ void main() {
       kitchenRoute: (context) => const KitchenView(),
       adminRoute: (context) => const AdminView(),
       tableRoute: (context) => const TableView(),
-
     },
   ));
 }

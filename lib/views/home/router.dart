@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:pos/constants/routes.dart';
 
-
 class RouteView extends StatelessWidget {
   const RouteView({Key? key}) : super(key: key);
 
@@ -46,6 +45,7 @@ class RouteView extends StatelessWidget {
               child: TextButton(
                 onPressed: () {
                   //login page
+
                   Navigator.of(context).pushNamed(loginRoute);
                 },
                 child: const Text(
