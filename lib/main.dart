@@ -20,7 +20,7 @@ void main() {
     theme: ThemeData(
       primarySwatch: Colors.teal,
     ),
-    home: const WorkersView(),
+    home: const HomePage(),
     routes: {
       mainRoute: (context) => const RouteView(),
       registerRoute: (context) => const RegisterView(),

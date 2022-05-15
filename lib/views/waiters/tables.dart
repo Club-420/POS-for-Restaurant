@@ -278,7 +278,9 @@ class _IndividualTableState extends State<IndividualTable> {
         actions: [
           IconButton(
               onPressed: () async {
-                await showCheckoutDialog(context, index: widget.index);
+                if (tables[widget.index].isOccupied) {
+                  await showCheckoutDialog(context, index: widget.index);
+                }
               },
               icon: const Icon(
                 Icons.logout_outlined,
@@ -450,18 +452,19 @@ class _IndividualTableState extends State<IndividualTable> {
                 ],
               ),
             ),
+            const Spacer(),
             SizedBox(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    'Total: ',
+                    'Total: \n',
                     style: TextStyle(
                       fontSize: 23,
                     ),
                   ),
                   Text(
-                    'Rs ${tables[widget.index].getTotalPrice as double}',
+                    'Rs ${tables[widget.index].getTotalPrice as double}\n',
                     style: const TextStyle(
                       fontSize: 25,
                       color: Colors.teal,
