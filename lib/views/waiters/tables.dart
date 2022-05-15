@@ -257,7 +257,7 @@ class _IndividualTableState extends State<IndividualTable> {
   @override
   Widget build(BuildContext context) {
     bool clicked = tables[widget.index].isOccupied;
-
+    double totalBill = tables[widget.index].getTotalPrice as double;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -430,6 +430,9 @@ class _IndividualTableState extends State<IndividualTable> {
                                           tables[widget.index].foods[index]
                                               ['name'],
                                           1);
+
+                                      totalBill = tables[widget.index]
+                                          .getTotalPrice as double;
                                     });
                                   },
                                   icon: const Icon(
@@ -458,7 +461,7 @@ class _IndividualTableState extends State<IndividualTable> {
                     ),
                   ),
                   Text(
-                    'Rs ${tables[widget.index].totalPrice}',
+                    'Rs ${tables[widget.index].getTotalPrice as double}',
                     style: const TextStyle(
                       fontSize: 25,
                       color: Colors.teal,
@@ -596,6 +599,14 @@ class _OrderMenuState extends State<OrderMenu> {
                   onPressed: () {
                     tables[widget.index].addFoodList(foodItems.foods);
                     Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => IndividualTable(
+                          index: widget.index,
+                        ),
+                      ),
+                    );
                   },
                   icon: const Icon(
                     Icons.check,

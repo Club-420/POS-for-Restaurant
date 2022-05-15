@@ -16,7 +16,6 @@ class TableSchema {
   //otherdatas
   String? name;
   bool isOccupied = false;
-  double totalPrice = 0.0;
   List<Map<String, Object>> foods = [];
 
   @override
@@ -24,11 +23,30 @@ class TableSchema {
     return 'index: $index, name: $name, foods: ${foods.toString()}';
   }
 
+  double get getTotalPrice {
+    double sum = 0.0;
+
+    if (foods.isEmpty) {
+      return sum;
+    }
+
+    for (final i in foods) {
+      for (final j in menu) {
+        if (i['name'] == j['name']) {
+          double price = j['price'] as double;
+          int no = i['noOfItem'] as int;
+
+          sum = sum + price * no;
+        }
+      }
+    }
+    return sum;
+  }
+
   void clear() {
     name = null;
     foods = [];
     isOccupied = false;
-    totalPrice = 0.0;
   }
 
   int contains(String food) {
@@ -88,47 +106,35 @@ class TableSchema {
 final List<Map<String, Object>> menu = [
   {
     'name': 'chicken',
-    'price': 150,
-    'quantity': 0,
+    'price': 150.0,
   },
   {
     'name': 'water',
-    'price': 25,
-    'quantity': 0,
+    'price': 25.0,
   },
   {
     'name': 'momo',
-    'price': 100,
-    'quantity': 0,
+    'price': 100.0,
   },
   {
     'name': 'ice cream',
-    'price': 30,
-    'quantity': 0,
+    'price': 30.0,
   },
   {
     'name': 'fruits',
-    'price': 190,
-    'quantity': 0,
+    'price': 190.0,
   },
   {
     'name': 'coffee',
-    'price': 100,
-    'quantity': 0,
+    'price': 100.0,
   },
   {
     'name': 'pakauda',
-    'price': 10,
-    'quantity': 0,
+    'price': 10.0,
   },
-  {
-    'name': 'fried rice',
-    'price': 35,
-    'quantity': 0,
-  },
+  {'name': 'fried rice', 'price': 35.0},
   {
     'name': 'sel roti',
-    'price': 20,
-    'quantity': 0,
+    'price': 20.0,
   }
 ];
