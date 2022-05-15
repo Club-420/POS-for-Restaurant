@@ -1,7 +1,6 @@
 final notifications = [];
 const noOfTables = 20;
 
-final Map<String, int> menus = {};
 List tables = [];
 
 //schema
@@ -20,10 +19,9 @@ List tables = [];
 //   'totalPrice': null as double,
 // };
 class OrderSchema {
-  String foodName;
-  double price;
-
-  OrderSchema({required this.foodName, required this.price});
+  String? foodName;
+  int noOfItem = 0;
+  double price = 0.0;
 }
 
 class TableSchema {
@@ -34,6 +32,7 @@ class TableSchema {
   String? name;
   bool isOccupied = false;
   double totalPrice = 0.0;
+  List foods = [];
 
   void clear() {
     name = null;
@@ -43,4 +42,32 @@ class TableSchema {
 }
 
 //now fill our tables with schema
-
+final List<Map<String, double>> menu = [
+  {
+    'chicken': 150,
+  },
+  {
+    'water': 25,
+  },
+  {
+    'momo': 100,
+  },
+  {
+    'ice cream': 30,
+  },
+  {
+    'fruits': 190,
+  },
+  {
+    'coffee': 100,
+  },
+  {
+    'pakauda': 10,
+  },
+  {
+    'fried rice': 35,
+  },
+  {
+    'sel roti': 20,
+  }
+];

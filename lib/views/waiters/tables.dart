@@ -359,7 +359,11 @@ class _IndividualTableState extends State<IndividualTable> {
                       const Spacer(),
                       IconButton(
                         onPressed: () {
-                          print('clicked');
+                          if( tables[widget.index].isOccupied ){
+
+                          }else{
+                            print('dont do this');
+                          }
                         },
                         icon: const Icon(
                           Icons.add,
@@ -367,7 +371,53 @@ class _IndividualTableState extends State<IndividualTable> {
                         ),
                       ),
                     ],
-                  )
+                  ),
+                  SingleChildScrollView(
+                    child: Container(
+                      margin: const EdgeInsets.all(10),
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height / 2.5,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.white,
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.grey,
+                            offset: Offset(1, 0),
+                            blurRadius: 6,
+                          )
+                        ],
+                      ),
+                      child: ListView.builder(
+                        itemCount: tables[widget.index].foods.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            width: double.infinity,
+                            height: MediaQuery.of(context).size.height / 15,
+                            margin: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                color: index.isEven
+                                    ? Colors.grey
+                                    : Colors.blueGrey,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.black,
+                                    offset: Offset(0, 1),
+                                    blurRadius: 6,
+                                  )
+                                ]),
+                            child: TextButton(
+                              onPressed: () {},
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: const [],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
