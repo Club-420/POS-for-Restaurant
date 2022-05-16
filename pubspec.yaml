@@ -64,6 +64,7 @@ flutter:
     - asset/images/loginView_logo.png
     - asset/images/mainPage.png
     - asset/images/verifyEmail.png
+    - asset/images/ramen.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

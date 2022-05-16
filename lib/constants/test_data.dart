@@ -2,6 +2,7 @@ final notifications = [];
 const noOfTables = 20;
 
 List tables = [];
+MenuSchema ourMenu = MenuSchema();
 
 class OrderSchema {
   String? foodName;
@@ -31,7 +32,7 @@ class TableSchema {
     }
 
     for (final i in foods) {
-      for (final j in menu) {
+      for (final j in menuItem) {
         if (i['name'] == j['name']) {
           double price = j['price'] as double;
           int no = i['noOfItem'] as int;
@@ -102,8 +103,31 @@ class TableSchema {
   }
 }
 
+class MenuSchema {
+  final List<Map<String, Object>> menu = [];
+
+  //for temporary initialization
+
+  void addList(List<Map<String, Object>> menuList) {
+    for (final item in menuList) {
+      menu.add(item);
+    }
+  }
+
+  void updateByIndex({required index, name = '', price = 0.0}) {
+    if (name == null || name == '') {
+    } else {
+      menu[index]['name'] = name;
+    }
+    if (price > 0.0) {
+      menu[index]['price'] = price;
+    }
+    return;
+  }
+}
+
 //now fill our tables with schema
-final List<Map<String, Object>> menu = [
+final List<Map<String, Object>> menuItem = [
   {
     'name': 'chicken',
     'price': 150.0,

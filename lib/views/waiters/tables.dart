@@ -50,9 +50,6 @@ class _TableViewState extends State<TableView> {
                 .pushNamedAndRemoveUntil(waiterRoute, (route) => false);
           },
         ),
-        title: const Text(
-          'Orders',
-        ),
         actions: [
           PopupMenuButton(
             icon: Icon(
