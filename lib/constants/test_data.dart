@@ -2,7 +2,7 @@ final notifications = [];
 const noOfTables = 20;
 
 List tables = [];
-MenuSchema ourMenu = MenuSchema();
+MenuSchema menu = MenuSchema();
 
 class OrderSchema {
   String? foodName;
@@ -104,9 +104,13 @@ class TableSchema {
 }
 
 class MenuSchema {
-  final List<Map<String, Object>> menu = [];
+  //this is temporary initialization
+  final List<Map<String, Object>> menu = menuItem;
 
-  //for temporary initialization
+  @override
+  String toString() {
+    return '$menu';
+  }
 
   void addList(List<Map<String, Object>> menuList) {
     for (final item in menuList) {
@@ -123,6 +127,14 @@ class MenuSchema {
       menu[index]['price'] = price;
     }
     return;
+  }
+
+  void clean() {
+    menu.clear();
+  }
+
+  void updateByMap({required index, required Map<String, Object> map}) {
+    updateByIndex(index: index, name: map['name'], price: map['price']);
   }
 }
 

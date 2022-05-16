@@ -14,7 +14,6 @@ class TableView extends StatefulWidget {
 
 class _TableViewState extends State<TableView> {
   int _selectedIndex = 0;
-
 //generate list of popupmenu item
   List<PopupMenuEntry> listOfNotification() {
     final List<PopupMenuEntry> _list = [];
@@ -525,7 +524,7 @@ class _OrderMenuState extends State<OrderMenu> {
                 10,
               ),
               child: ListView.builder(
-                itemCount: menu.length,
+                itemCount: menu.menu.length,
                 itemBuilder: (context, index) {
                   //get the items
                   return Container(
@@ -545,9 +544,9 @@ class _OrderMenuState extends State<OrderMenu> {
                     child: Row(
                       children: [
                         Text(
-                          foodItems.howMuch(menu[index]['name'] as String) < 1
-                              ? '  ${menu[index]['name']}'
-                              : '  ${menu[index]['name']}   x  ${foodItems.howMuch(menu[index]['name'] as String)}',
+                          foodItems.howMuch(menu.menu[index]['name'] as String) < 1
+                              ? '  ${menu.menu[index]['name']}'
+                              : '  ${menu.menu[index]['name']}   x  ${foodItems.howMuch(menu.menu[index]['name'] as String)}',
                           style: const TextStyle(
                             color: Colors.white,
                           ),
@@ -556,7 +555,7 @@ class _OrderMenuState extends State<OrderMenu> {
                         IconButton(
                           onPressed: () {
                             setState(() {
-                              foodItems.add(menu[index]['name'] as String, 1);
+                              foodItems.add(menu.menu[index]['name'] as String, 1);
                             });
                           },
                           icon: const Icon(
@@ -568,7 +567,7 @@ class _OrderMenuState extends State<OrderMenu> {
                           onPressed: () {
                             setState(() {
                               foodItems.remove(
-                                  menu[index]['name'] as String, 1);
+                                  menu.menu[index]['name'] as String, 1);
                             });
                           },
                           icon: const Icon(

@@ -4,7 +4,7 @@ import 'package:pos/constants/test_data.dart';
 Widget menuWidget(BuildContext context) {
   final orientation = MediaQuery.of(context).orientation;
   return GridView.builder(
-      itemCount: menu.length,
+      itemCount: menu.menu.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: (orientation == Orientation.portrait) ? 2 : 3,
       ),
@@ -52,25 +52,27 @@ Widget menuWidget(BuildContext context) {
                 ),
               ),
               const Spacer(),
-              Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                Text(
-                  '     ${menu[index]['name']}\n',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.teal,
-                    fontSize: 20,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    '   ${menu.menu[index]['name']}\t\t\n',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.teal,
+                      fontSize: 10,
+                    ),
                   ),
-                ),
-                const Spacer(),
-                Text(
-                  'Rs ${menu[index]['price']}        \n',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.teal,
-                    fontSize: 20,
+                  Text(
+                    'Rs ${menu.menu[index]['price']}        \n',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.teal,
+                      fontSize: 10,
+                    ),
                   ),
-                ),
-              ])
+                ],
+              )
             ],
           ),
         );
@@ -87,6 +89,7 @@ class EditMenu extends StatefulWidget {
 class _EditMenuState extends State<EditMenu> {
   @override
   Widget build(BuildContext context) {
+    final Map<String, Object> tempMenuItem = menu.menu[widget.index];
     return Scaffold(
       backgroundColor: Colors.transparent,
       resizeToAvoidBottomInset: false,
@@ -113,7 +116,7 @@ class _EditMenuState extends State<EditMenu> {
         child: Column(
           children: [
             Text(
-              '\n${menu[widget.index]['name']}',
+              '\n${tempMenuItem['name']}',
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.teal,
@@ -132,16 +135,15 @@ class _EditMenuState extends State<EditMenu> {
                 Container(
                   margin: const EdgeInsets.all(10),
                   width: MediaQuery.of(context).size.width / 2,
-                  // decoration: BoxDecoration(
-                  //   color: Colors.teal,
-                  //   borderRadius: BorderRadius.circular(5),
-                  // ),
                   child: TextField(
-                    // controller: _name,
                     enableSuggestions: false,
                     autocorrect: false,
                     onSubmitted: (value) {
-                      print('submitted');
+                      print(menu.toString());
+
+                      setState(() {
+                        tempMenuItem['name'] = value;
+                      });
                     },
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -161,7 +163,12 @@ class _EditMenuState extends State<EditMenu> {
                     enableSuggestions: false,
                     autocorrect: false,
                     onSubmitted: (value) {
-                      print(' new price submitted');
+                      print(menu.toString());
+                      if (double.tryParse(value) != null) {
+                        setState(() {
+                          tempMenuItem['price'] = double.tryParse(value) as double;
+                        });
+                      }
                     },
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -199,6 +206,7 @@ class _EditMenuState extends State<EditMenu> {
               children: [
                 IconButton(
                   onPressed: () {
+                    print('wrong tick');
                     Navigator.pop(context);
                   },
                   icon: const Icon(
@@ -209,16 +217,14 @@ class _EditMenuState extends State<EditMenu> {
                 const Spacer(),
                 IconButton(
                   onPressed: () {
-                    // tables[widget.index].addFoodList(foodItems.foods);
-                    // Navigator.pop(context);
-                    // Navigator.pop(context);
-                    // Navigator.of(context).push(
-                    //   MaterialPageRoute(
-                    //     builder: (context) => IndividualTable(
-                    //       index: widget.index,
-                    //     ),
-                    //   ),
-                    // );
+                    print('right tick');
+                    setState(() {
+                      // menu.updateByMap(
+                      //   index: widget.index,
+                      //   map: tempMenuItem,
+                      // );
+                    });
+                    Navigator.pop(context);
                   },
                   icon: const Icon(
                     Icons.check,
