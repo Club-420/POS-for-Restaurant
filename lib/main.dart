@@ -15,12 +15,12 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   runApp(MaterialApp(
-    title: 'Flutter Demo',
+    title: 'Cafe',
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
       primarySwatch: Colors.teal,
     ),
-    home: const HomePage(),
+    home: const WorkersView(),
     routes: {
       mainRoute: (context) => const RouteView(),
       registerRoute: (context) => const RegisterView(),

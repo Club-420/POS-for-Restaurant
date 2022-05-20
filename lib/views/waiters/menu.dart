@@ -45,13 +45,12 @@ Widget menuWidget(BuildContext context) {
               ),
               const Image(
                 alignment: Alignment.center,
-                width: 500,
-                height: 140,
+                width: 100,
+                height: 100,
                 image: AssetImage(
                   'asset/images/loginView_logo.png',
                 ),
               ),
-              const Spacer(),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -92,13 +91,14 @@ class _EditMenuState extends State<EditMenu> {
     final Map<String, Object> tempMenuItem = menu.menu[widget.index];
     return Scaffold(
       backgroundColor: Colors.transparent,
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       body: Container(
         width: double.infinity,
-        height: MediaQuery.of(context).size.height / 1.5,
+        // height: MediaQuery.of(context).size.height / 1.5,
         margin: EdgeInsets.fromLTRB(
           10,
-          MediaQuery.of(context).size.height / 4,
+          // MediaQuery.of(context).size.height / 4,
+          10,
           10,
           10,
         ),
@@ -115,6 +115,7 @@ class _EditMenuState extends State<EditMenu> {
         ),
         child: Column(
           children: [
+            Flexible(child: Container(), flex: 1),
             Text(
               '\n${tempMenuItem['name']}',
               style: const TextStyle(
@@ -166,7 +167,8 @@ class _EditMenuState extends State<EditMenu> {
                       print(menu.toString());
                       if (double.tryParse(value) != null) {
                         setState(() {
-                          tempMenuItem['price'] = double.tryParse(value) as double;
+                          tempMenuItem['price'] =
+                              double.tryParse(value) as double;
                         });
                       }
                     },

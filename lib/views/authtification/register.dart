@@ -34,7 +34,7 @@ class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        // resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: const Text(
             'Sign Up',
@@ -55,17 +55,17 @@ class _RegisterViewState extends State<RegisterView> {
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 4,
-                child: const Align(
-                  alignment: Alignment.center,
-                  child: Text('Create an Account, its free',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.teal,
-                      )),
+              const Flexible(
+                child: Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Text(
+                      'Create an Account',
+                      style: TextStyle(color: Colors.teal, fontSize: 20),
+                    ),
+                  ),
                 ),
+                flex: 2,
               ),
               Padding(
                 padding: const EdgeInsets.all(10),
@@ -163,7 +163,10 @@ class _RegisterViewState extends State<RegisterView> {
                   ),
                 ),
               ),
-              const Spacer(),
+              Flexible(
+                child: Container(),
+                flex: 2,
+              ),
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: Row(

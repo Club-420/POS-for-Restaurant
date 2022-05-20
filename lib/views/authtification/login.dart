@@ -46,24 +46,24 @@ class _LoginViewState extends State<LoginView> {
           },
         ),
       ),
-      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
-          Container(
-            height: 200,
-            width: 200,
-            padding: const EdgeInsets.only(
-              top: 40,
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(
-                200,
+          Flexible(
+            flex: 2,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Container(
+                height: 200,
+                width: 200,
+                padding: const EdgeInsets.only(
+                  top: 40,
+                ),
+                child: const Center(
+                  child: Center(
+                      child: Image(
+                          image: AssetImage('asset/images/loginView_logo.png'))),
+                ),
               ),
-            ),
-            child: const Center(
-              child: Center(
-                  child: Image(
-                      image: AssetImage('asset/images/loginView_logo.png'))),
             ),
           ),
           Padding(
@@ -152,7 +152,10 @@ class _LoginViewState extends State<LoginView> {
               ),
             ),
           ),
-          const Spacer(),
+          Flexible(
+            child: Container(),
+            flex: 1,
+          ),
           Padding(
             padding: const EdgeInsets.all(10),
             child: Row(

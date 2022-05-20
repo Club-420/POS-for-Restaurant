@@ -1,4 +1,4 @@
-final notifications = [];
+final notifications = ['paneru dai is here'];
 const noOfTables = 20;
 
 List tables = [];
@@ -22,6 +22,17 @@ class TableSchema {
   @override
   String toString() {
     return 'index: $index, name: $name, foods: ${foods.toString()}';
+  }
+
+  double getitemPrice({required String foodName}) {
+    int index = contains(foodName);
+    return menuItem[index]['price'] as double;
+  }
+
+  double getItemTotalPrice({required String foodName}) {
+    double price = getitemPrice(foodName: foodName);
+    double sum = price * howMuch(foodName);
+    return sum;
   }
 
   double get getTotalPrice {
@@ -143,34 +154,46 @@ final List<Map<String, Object>> menuItem = [
   {
     'name': 'chicken',
     'price': 150.0,
+    'category': 'non-veg',
   },
   {
     'name': 'water',
+    'category': 'non-veg',
     'price': 25.0,
   },
   {
     'name': 'momo',
+    'category': 'non-veg',
     'price': 100.0,
   },
   {
     'name': 'ice cream',
+    'category': 'non-veg',
     'price': 30.0,
   },
   {
     'name': 'fruits',
+    'category': 'non-veg',
     'price': 190.0,
   },
   {
     'name': 'coffee',
+    'category': 'non-veg',
     'price': 100.0,
   },
   {
     'name': 'pakauda',
+    'category': 'non-veg',
     'price': 10.0,
   },
-  {'name': 'fried rice', 'price': 35.0},
+  {
+    'name': 'fried rice',
+    'price': 35.0,
+    'category': 'non-veg',
+  },
   {
     'name': 'sel roti',
     'price': 20.0,
+    'category': 'non-veg',
   }
 ];
