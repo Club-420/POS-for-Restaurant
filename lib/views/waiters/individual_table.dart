@@ -107,42 +107,22 @@ class _IndividualTableState extends State<IndividualTable> {
                   height: MediaQuery.of(context).size.height / 1.4,
                   margin: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.white,
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black,
-                        blurRadius: 6,
-                        offset: Offset(
-                          0,
-                          1,
-                        ),
-                      )
-                    ],
-                  ),
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.white,
+                      border: Border.all(color: Colors.grey, width: 1.5)),
                   child: GridView.builder(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
+                      crossAxisCount: 4,
                     ),
                     itemCount: menu.menu.length,
                     itemBuilder: (context, index) {
                       return Container(
                         margin: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white,
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.grey,
-                              blurRadius: 6,
-                              offset: Offset(
-                                0,
-                                1,
-                              ),
-                            ),
-                          ],
-                        ),
+                            borderRadius: BorderRadius.circular(5),
+                            color: Colors.white,
+                            border: Border.all(color: Colors.grey, width: 0.5)),
                         child: InkWell(
                           child: Column(
                             // mainAxisAlignment: MainAxisAlignment.center,
@@ -154,32 +134,36 @@ class _IndividualTableState extends State<IndividualTable> {
                               ),
                               Flexible(
                                 flex: 1,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '${menu.menu[index]['name']}',
-                                      style: TextStyle(
-                                        fontSize:
-                                            MediaQuery.of(context).size.width >
-                                                    500
-                                                ? 20
-                                                : 10,
-                                        color: Colors.teal,
+                                child: FittedBox(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        '${menu.menu[index]['name']}',
+                                        style: TextStyle(
+                                          fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width >
+                                                  500
+                                              ? 20
+                                              : 10,
+                                          color: Colors.teal,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      '  Rs. ${menu.menu[index]['price']}',
-                                      style: TextStyle(
-                                        fontSize:
-                                            MediaQuery.of(context).size.width >
-                                                    500
-                                                ? 20
-                                                : 10,
-                                        color: Colors.teal,
+                                      Text(
+                                        '  Rs. ${menu.menu[index]['price']}',
+                                        style: TextStyle(
+                                          fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width >
+                                                  500
+                                              ? 20
+                                              : 10,
+                                          color: Colors.teal,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               )
                             ],
@@ -202,62 +186,71 @@ class _IndividualTableState extends State<IndividualTable> {
               Flexible(
                 flex: 1,
                 child: Container(
+                  
                   margin: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.white,
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black,
-                        blurRadius: 6,
-                        offset: Offset(
-                          0,
-                          1,
-                        ),
-                      )
-                    ],
-                  ),
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.white,
+                      border: Border.all(color: Colors.grey, width: 1.5)),
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height / 35,
+                      Container(
+                        
+                        decoration: const BoxDecoration(
+                            border: Border(
+                          bottom: BorderSide(
+                            color: Colors.grey,
+                            width: 0.5,
+                          ),
+                        )),
+                        height: MediaQuery.of(context).size.height / 20,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(
-                              'Item',
-                              style: TextStyle(
-                                fontSize:
-                                    MediaQuery.of(context).size.width > 550
-                                        ? 15
-                                        : 10,
+                            Flexible(
+                              flex: 2,
+                              child: Text(
+                                'Items',
+                                style: TextStyle(
+                                  fontSize:
+                                      MediaQuery.of(context).size.width > 550
+                                          ? 20
+                                          : 10,
+                                ),
                               ),
                             ),
-                            Text(
-                              'No.',
-                              style: TextStyle(
-                                fontSize:
-                                    MediaQuery.of(context).size.width > 550
-                                        ? 15
-                                        : 10,
+                            Flexible(
+                              flex: 1,
+                              child: Text(
+                                'Qty',
+                                style: TextStyle(
+                                  fontSize:
+                                      MediaQuery.of(context).size.width > 550
+                                          ? 20
+                                          : 10,
+                                ),
                               ),
                             ),
-                            Text(
-                              'Rs',
-                              style: TextStyle(
-                                fontSize:
-                                    MediaQuery.of(context).size.width > 550
-                                        ? 15
-                                        : 10,
+                            Flexible(
+                              flex: 2,
+                              child: Text(
+                                'Price',
+                                style: TextStyle(
+                                  fontSize:
+                                      MediaQuery.of(context).size.width > 550
+                                          ? 20
+                                          : 10,
+                                ),
                               ),
                             ),
                           ],
                         ),
                       ),
-
+                  
                       //orders list
                       SizedBox(
+                        
                         width: double.infinity,
                         height: MediaQuery.of(context).size.height / 1.4,
                         child: ListView.builder(
@@ -265,60 +258,83 @@ class _IndividualTableState extends State<IndividualTable> {
                           itemBuilder: (context, index) {
                             return Container(
                               margin: const EdgeInsets.all(5),
-                              height: 30,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
+                              height: 60,
+                              decoration: const BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    color: Colors.grey,
+                                    width: 0.5,
+                                  ),
+                                ),
                                 color: Colors.white,
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Colors.black,
-                                    blurRadius: 6,
-                                    offset: Offset(
-                                      0,
-                                      1,
-                                    ),
-                                  )
-                                ],
                               ),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   //name of item
-                                  Text(
-                                    '${tables[widget.index].foods[index]['name']}',
-                                    style: TextStyle(
-                                      color: Colors.teal,
-                                      fontSize:
-                                          MediaQuery.of(context).size.width >
-                                                  550
-                                              ? 15
-                                              : 10,
+                                  Flexible(
+                                    flex: 2,
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      child: Center(
+                                        child: Text(
+                                          '${tables[widget.index].foods[index]['name']}',
+                                          style: TextStyle(
+                                            color: Colors.teal,
+                                            fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .width >
+                                                    550
+                                                ? 15
+                                                : 10,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                   //no of item
-                                  Text(
-                                    '   ${tables[widget.index].howMuch(tables[widget.index].foods[index]['name'])}',
-                                    style: TextStyle(
-                                      color: Colors.teal,
-                                      fontSize:
-                                          MediaQuery.of(context).size.width >
-                                                  550
-                                              ? 15
-                                              : 10,
+                                  Flexible(
+                                    flex: 1,
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      child: Center(
+                                        child: Text(
+                                          '   ${tables[widget.index].howMuch(tables[widget.index].foods[index]['name'])}',
+                                          style: TextStyle(
+                                            color: Colors.teal,
+                                            fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .width >
+                                                    550
+                                                ? 15
+                                                : 10,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
-
+                  
                                   //total item price
-                                  Text(
-                                    '  ${tables[widget.index].getItemTotalPrice(foodName: tables[widget.index].foods[index]['name'])}',
-                                    style: TextStyle(
-                                      color: Colors.teal,
-                                      fontSize:
-                                          MediaQuery.of(context).size.width >
-                                                  550
-                                              ? 15
-                                              : 10,
+                                  Flexible(
+                                    flex: 2,
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      child: Center(
+                                        child: Text(
+                                          '  ${tables[widget.index].getItemTotalPrice(foodName: tables[widget.index].foods[index]['name'])}',
+                                          style: TextStyle(
+                                            color: Colors.teal,
+                                            fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .width >
+                                                    550
+                                                ? 15
+                                                : 10,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -327,11 +343,36 @@ class _IndividualTableState extends State<IndividualTable> {
                           },
                         ),
                       ),
+                  
+                      // total price
+                      // SizedBox(
+                      //    height: MediaQuery.of(context).size.height/50,
+                      //   child: Row(children: [
+                      //     Flexible(
+                      //         child: SizedBox(
+                               
+                      //           child: Text('Count: '),
+                      //         ),
+                      //         flex: 2),
+                      //     Flexible(
+                      //         child: SizedBox(
+                      //           width: double.infinity,
+                      //           child: Text('Count ='),
+                      //         ),
+                      //         flex: 1),
+                      //     Flexible(
+                      //         child: SizedBox(
+                      //           width: double.infinity,
+                      //           child: Text('Count ='),
+                      //         ),
+                      //         flex: 2),
+                      //   ]),
+                      // )
                     ],
                   ),
                 ),
               ),
-            ])
+            ]),
             // Row(
             //   children: <Widget>[
             //     Flexible(

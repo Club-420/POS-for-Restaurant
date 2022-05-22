@@ -2,13 +2,20 @@
 import 'package:flutter/material.dart';
 import 'package:pos/constants/routes.dart';
 
-class RouteView extends StatelessWidget {
+class RouteView extends StatefulWidget {
   const RouteView({Key? key}) : super(key: key);
 
   @override
+  State<RouteView> createState() => _RouteViewState();
+}
+
+class _RouteViewState extends State<RouteView> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
+      
           child: Container(
         width: double.infinity,
         // height: MediaQuery.of(context).size.height,

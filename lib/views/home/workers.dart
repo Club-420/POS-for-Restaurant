@@ -16,6 +16,7 @@ class _WorkersViewState extends State<WorkersView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text("Home"),
         actions: [

@@ -58,7 +58,7 @@ class _RegisterViewState extends State<RegisterView> {
               const Flexible(
                 child: Center(
                   child: Padding(
-                    padding: EdgeInsets.all(20.0),
+                    padding: EdgeInsets.all(10.0),
                     child: Text(
                       'Create an Account',
                       style: TextStyle(color: Colors.teal, fontSize: 20),
@@ -104,7 +104,7 @@ class _RegisterViewState extends State<RegisterView> {
               ),
               Container(
                 width: 250,
-                height: 50,
+                height: 40,
                 decoration: BoxDecoration(
                   color: Colors.teal,
                   borderRadius: BorderRadius.circular(50),
@@ -158,7 +158,7 @@ class _RegisterViewState extends State<RegisterView> {
                     'Sign up',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 25,
+                      fontSize: 20,
                     ),
                   ),
                 ),

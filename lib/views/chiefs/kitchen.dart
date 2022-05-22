@@ -10,8 +10,12 @@ class KitchenView extends StatefulWidget {
 class _KitchenViewState extends State<KitchenView> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
+    return  Scaffold(
+      appBar: AppBar(
+        title: const Text('Kitchen'),
+        centerTitle: true,
+      ),
+      body: const Center(
         child: Text('kitchen is being constructed'),
       ),
     );

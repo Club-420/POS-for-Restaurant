@@ -13,7 +13,6 @@ import 'views/home/router.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
   runApp(MaterialApp(
     title: 'Cafe',
     debugShowCheckedModeBanner: false,

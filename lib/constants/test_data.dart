@@ -162,7 +162,7 @@ final List<Map<String, Object>> menuItem = [
     'price': 25.0,
   },
   {
-    'name': 'momo',
+    'name': 'aloo ko bhujiya tarkari ko jhol ra masu',
     'category': 'non-veg',
     'price': 100.0,
   },
