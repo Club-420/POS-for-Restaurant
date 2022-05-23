@@ -20,8 +20,6 @@ class _IndividualTableState extends State<IndividualTable> {
   @override
   Widget build(BuildContext context) {
     bool clicked = tables[widget.index].isOccupied;
-    double totalBill = tables[widget.index].getTotalPrice as double;
-    final TableSchema foodItems = TableSchema(index: 0);
 
     //add items to the menu
     return Scaffold(
@@ -183,10 +181,11 @@ class _IndividualTableState extends State<IndividualTable> {
                   ),
                 ),
               ),
+
+              //itemsprices
               Flexible(
                 flex: 1,
                 child: Container(
-                  
                   margin: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
@@ -195,15 +194,15 @@ class _IndividualTableState extends State<IndividualTable> {
                   child: Column(
                     children: [
                       Container(
-                        
                         decoration: const BoxDecoration(
                             border: Border(
                           bottom: BorderSide(
                             color: Colors.grey,
-                            width: 0.5,
+                            width: 1,
                           ),
                         )),
-                        height: MediaQuery.of(context).size.height / 20,
+                        height: 30,
+                        // height: MediaQuery.of(context).size.height / 20,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -247,127 +246,120 @@ class _IndividualTableState extends State<IndividualTable> {
                           ],
                         ),
                       ),
-                  
+
                       //orders list
                       SizedBox(
-                        
                         width: double.infinity,
-                        height: MediaQuery.of(context).size.height / 1.4,
+                        height: MediaQuery.of(context).size.height / 1.5,
                         child: ListView.builder(
                           itemCount: tables[widget.index].foods.length,
                           itemBuilder: (context, index) {
-                            return Container(
-                              margin: const EdgeInsets.all(5),
-                              height: 60,
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                    color: Colors.grey,
-                                    width: 0.5,
+                            return InkWell(
+                              onDoubleTap: () {
+                                setState(() {
+                                  tables.remove(tables[widget.index]
+                                      .foods[index]['name']);
+                                  print(tables[widget.index].foods[index]);
+                                });
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.all(5),
+                                height: 50,
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: Colors.grey,
+                                      width: 0.5,
+                                    ),
                                   ),
+                                  color: Colors.white,
                                 ),
-                                color: Colors.white,
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  //name of item
-                                  Flexible(
-                                    flex: 2,
-                                    child: SizedBox(
-                                      width: double.infinity,
-                                      child: Center(
-                                        child: Text(
-                                          '${tables[widget.index].foods[index]['name']}',
-                                          style: TextStyle(
-                                            color: Colors.teal,
-                                            fontSize: MediaQuery.of(context)
-                                                        .size
-                                                        .width >
-                                                    550
-                                                ? 15
-                                                : 10,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    // InkWell(
+                                    //   onDoubleTap: () {
+                                    //     tables.remove(
+                                    //         tables[widget.index].foods[index]);
+                                    //   },
+                                    //   child:
+                                    //name of item
+                                    Flexible(
+                                      flex: 2,
+                                      child: SizedBox(
+                                        width: double.infinity,
+                                        child: Center(
+                                          child: Text(
+                                            '${tables[widget.index].foods[index]['name']}',
+                                            style: TextStyle(
+                                              color: Colors.teal,
+                                              fontSize: MediaQuery.of(context)
+                                                          .size
+                                                          .width >
+                                                      550
+                                                  ? 15
+                                                  : 10,
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  //no of item
-                                  Flexible(
-                                    flex: 1,
-                                    child: SizedBox(
-                                      width: double.infinity,
-                                      child: Center(
-                                        child: Text(
-                                          '   ${tables[widget.index].howMuch(tables[widget.index].foods[index]['name'])}',
-                                          style: TextStyle(
-                                            color: Colors.teal,
-                                            fontSize: MediaQuery.of(context)
-                                                        .size
-                                                        .width >
-                                                    550
-                                                ? 15
-                                                : 10,
+                                    // ),
+                                    //no of item
+                                    Flexible(
+                                      flex: 1,
+                                      child: SizedBox(
+                                        width: double.infinity,
+                                        child: Center(
+                                          child: Text(
+                                            '   ${tables[widget.index].howMuch(tables[widget.index].foods[index]['name'])}',
+                                            style: TextStyle(
+                                              color: Colors.teal,
+                                              fontSize: MediaQuery.of(context)
+                                                          .size
+                                                          .width >
+                                                      550
+                                                  ? 15
+                                                  : 10,
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                  
-                                  //total item price
-                                  Flexible(
-                                    flex: 2,
-                                    child: SizedBox(
-                                      width: double.infinity,
-                                      child: Center(
-                                        child: Text(
-                                          '  ${tables[widget.index].getItemTotalPrice(foodName: tables[widget.index].foods[index]['name'])}',
-                                          style: TextStyle(
-                                            color: Colors.teal,
-                                            fontSize: MediaQuery.of(context)
-                                                        .size
-                                                        .width >
-                                                    550
-                                                ? 15
-                                                : 10,
+
+                                    //total item price
+
+                                    Flexible(
+                                      flex: 2,
+                                      child: SizedBox(
+                                        width: double.infinity,
+                                        child: Center(
+                                          child: Text(
+                                            '  ${tables[widget.index].getItemTotalPrice(foodName: tables[widget.index].foods[index]['name'])}',
+                                            style: TextStyle(
+                                              color: Colors.teal,
+                                              fontSize: MediaQuery.of(context)
+                                                          .size
+                                                          .width >
+                                                      550
+                                                  ? 15
+                                                  : 10,
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             );
                           },
                         ),
                       ),
-                  
+
                       // total price
-                      // SizedBox(
-                      //    height: MediaQuery.of(context).size.height/50,
-                      //   child: Row(children: [
-                      //     Flexible(
-                      //         child: SizedBox(
-                               
-                      //           child: Text('Count: '),
-                      //         ),
-                      //         flex: 2),
-                      //     Flexible(
-                      //         child: SizedBox(
-                      //           width: double.infinity,
-                      //           child: Text('Count ='),
-                      //         ),
-                      //         flex: 1),
-                      //     Flexible(
-                      //         child: SizedBox(
-                      //           width: double.infinity,
-                      //           child: Text('Count ='),
-                      //         ),
-                      //         flex: 2),
-                      //   ]),
-                      // )
                     ],
                   ),
                 ),
@@ -755,6 +747,154 @@ class _IndividualTableState extends State<IndividualTable> {
 //             //     ],
 //             //   ),
 //             // )
+            Container(
+              decoration: const BoxDecoration(
+                  border: Border(
+                top: BorderSide(
+                  color: Colors.grey,
+                  width: 1,
+                ),
+              )),
+              height: 50,
+              // height: MediaQuery.of(context).size.height / 20,
+              child: Row(
+                children: [
+                  Flexible(
+                    flex: 2,
+                    child: Container(
+                      height: 50,
+                      color: Colors.teal,
+                      // child: SingleChildScrollView(
+                      //   child: ListView.builder(
+                      //     scrollDirection: Axis.horizontal,
+                      //     itemCount: menu.category.length,
+                      //     itemBuilder: (context, index) {
+                      //       return const Text('hi');
+                      //     },
+                      //   ),
+                      // ),
+
+                      // child: Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //   crossAxisAlignment: CrossAxisAlignment.center,
+                      //   children: [
+                      //     Flexible(
+                      //       flex: 1,
+                      //       child: TextButton(
+                      //         onPressed: () {},
+                      //         child: Text(
+                      //           'All',
+                      //           style: TextStyle(
+                      //             backgroundColor: Colors.teal,
+                      //             color: Colors.white,
+                      //             fontSize:
+                      //                 MediaQuery.of(context).size.width > 550
+                      //                     ? 20
+                      //                     : 10,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     Flexible(
+                      //       flex: 1,
+                      //       child: TextButton(
+                      //         onPressed: () {},
+                      //         child: Text(
+                      //           'Veg',
+                      //           style: TextStyle(
+                      //             backgroundColor: Colors.teal,
+                      //             color: Colors.white,
+                      //             fontSize:
+                      //                 MediaQuery.of(context).size.width > 550
+                      //                     ? 20
+                      //                     : 10,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     Flexible(
+                      //       flex: 1,
+                      //       child: TextButton(
+                      //         onPressed: () {},
+                      //         child: Text(
+                      //           'Non-Veg',
+                      //           style: TextStyle(
+                      //             backgroundColor: Colors.teal,
+                      //             color: Colors.white,
+                      //             fontSize:
+                      //                 MediaQuery.of(context).size.width > 550
+                      //                     ? 20
+                      //                     : 10,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     Flexible(
+                      //       flex: 1,
+                      //       child: TextButton(
+                      //         onPressed: () {},
+                      //         child: Text(
+                      //           'Drinks',
+                      //           style: TextStyle(
+                      //             backgroundColor: Colors.teal,
+                      //             color: Colors.white,
+                      //             fontSize:
+                      //                 MediaQuery.of(context).size.width > 550
+                      //                     ? 20
+                      //                     : 10,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                    ),
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          flex: 1,
+                          child: Text(
+                            'Count :',
+                            style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.width > 550
+                                  ? 20
+                                  : 10,
+                            ),
+                          ),
+                        ),
+                        Flexible(
+                          flex: 1,
+                          child: Text(
+                            'Total Qty:',
+                            style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.width > 550
+                                  ? 20
+                                  : 10,
+                            ),
+                          ),
+                        ),
+                        Flexible(
+                          flex: 2,
+                          child: Text(
+                            'Total: ',
+                            style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.width > 550
+                                  ? 20
+                                  : 10,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

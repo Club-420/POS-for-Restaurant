@@ -1,4 +1,4 @@
-final notifications = ['paneru dai is here'];
+final notifications = ['paneru muji is here'];
 const noOfTables = 20;
 
 List tables = [];
@@ -117,10 +117,19 @@ class TableSchema {
 class MenuSchema {
   //this is temporary initialization
   final List<Map<String, Object>> menu = menuItem;
+  List<String> category = [];
 
   @override
   String toString() {
     return '$menu';
+  }
+
+  void allCategory() {
+    for (final item in menu) {
+      if (!category.contains(item['category'] as String)) {
+        category.add(item['category'] as String);
+      }
+    }
   }
 
   void addList(List<Map<String, Object>> menuList) {
@@ -152,13 +161,28 @@ class MenuSchema {
 //now fill our tables with schema
 final List<Map<String, Object>> menuItem = [
   {
-    'name': 'chicken',
+    'name': 'Chicken',
+    'price': 150.0,
+    'category': 'non-veg',
+  },
+   {
+    'name': 'Chicken MoMo',
+    'price': 150.0,
+    'category': 'non-veg',
+  },
+   {
+    'name': 'Chicken Chewmin',
+    'price': 150.0,
+    'category': 'non-veg',
+  },
+   {
+    'name': 'Chicken Thukpa',
     'price': 150.0,
     'category': 'non-veg',
   },
   {
-    'name': 'water',
-    'category': 'non-veg',
+    'name': 'Water',
+    'category': 'Drinks',
     'price': 25.0,
   },
   {
@@ -168,32 +192,32 @@ final List<Map<String, Object>> menuItem = [
   },
   {
     'name': 'ice cream',
-    'category': 'non-veg',
+    'category': 'veg',
     'price': 30.0,
   },
   {
     'name': 'fruits',
-    'category': 'non-veg',
+    'category': 'veg',
     'price': 190.0,
   },
   {
     'name': 'coffee',
-    'category': 'non-veg',
+    'category': 'veg',
     'price': 100.0,
   },
   {
     'name': 'pakauda',
-    'category': 'non-veg',
+    'category': 'veg',
     'price': 10.0,
   },
   {
     'name': 'fried rice',
     'price': 35.0,
-    'category': 'non-veg',
+    'category': 'veg',
   },
   {
     'name': 'sel roti',
     'price': 20.0,
-    'category': 'non-veg',
+    'category': 'veg',
   }
 ];
