@@ -125,11 +125,17 @@ class MenuSchema {
     return '$menu';
   }
 
+  void delete({required String name}) {
+    db.deleteSingleItem(name: name);
+  }
+
   void addSingleItem({required name, required price, required category}) {
-    if(!_checkContents(name)){
-      db.addSingleItem({'name':name,'price':price,'category':category});
+    double price_ = double.parse(price);
+    if (!_checkContents(name) && price_ > 0) {
+      db.addSingleItem({'name': name, 'price': price_, 'category': category});
     }
   }
+
   bool _checkContents(String name) {
     for (final item in menu) {
       if (item['name'] == name) {

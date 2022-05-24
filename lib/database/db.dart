@@ -8,20 +8,25 @@ class MenuDB {
       db.collection('menu').add(item);
     }
   }
-void addSingleItem(Map<String, dynamic> menuItem) {
+
+  void addSingleItem(Map<String, dynamic> menuItem) {
     final db = FirebaseFirestore.instance;
-
-    
-      db.collection('menu').add(menuItem);
-
+    String docName = menuItem['name'];
+    db.collection('menu').doc(docName).set(menuItem);
   }
+
+  void deleteSingleItem({required String name}) {
+    final db = FirebaseFirestore.instance;
+    db.collection('menu').doc(name).delete();
+  }
+
+
   Future<List<Map<String, dynamic>>> getAllItems() async {
     final db = FirebaseFirestore.instance;
     final List<Map<String, dynamic>> tempList = [];
     await db.collection('menu').get().then((data) {
       for (final doc in data.docs) {
         tempList.add(doc.data());
-        
       }
     });
     return tempList;
