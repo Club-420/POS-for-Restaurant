@@ -172,7 +172,7 @@ class EditMenu extends StatefulWidget {
 class _EditMenuState extends State<EditMenu> {
   @override
   Widget build(BuildContext context) {
-    final Map<String, Object> tempMenuItem = menu.menu[widget.index];
+    final Map<String, dynamic> tempMenuItem = menu.menu[widget.index];
     return Scaffold(
       backgroundColor: Colors.transparent,
       // resizeToAvoidBottomInset: false,

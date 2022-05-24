@@ -1,4 +1,6 @@
+import 'package:pos/database/db.dart';
 final notifications = ['Notifications'];
+
 const noOfTables = 20;
 List<String> Categories = [
   'Veg','Non-Veg','Drinks'
@@ -6,12 +8,6 @@ List<String> Categories = [
  String dropdownvalue = 'Veg';
 List tables = [];
 MenuSchema menu = MenuSchema();
-
-class OrderSchema {
-  String? foodName;
-  int noOfItem = 0;
-  double price = 0.0;
-}
 
 class TableSchema {
   final int index;
@@ -28,8 +24,12 @@ class TableSchema {
   }
 
   double getitemPrice({required String foodName}) {
-    int index = contains(foodName);
-    return menuItem[index]['price'] as double;
+    for (int index = 0; index < menu.menu.length; index++) {
+      if (menu.menu[index]['name'] == foodName) {
+        return menu.menu[index]['price'] as double;
+      }
+    }
+    return 0;
   }
 
   double getItemTotalPrice({required String foodName}) {
@@ -46,7 +46,7 @@ class TableSchema {
     }
 
     for (final i in foods) {
-      for (final j in menuItem) {
+      for (final j in menu.menu) {
         if (i['name'] == j['name']) {
           double price = j['price'] as double;
           int no = i['noOfItem'] as int;
@@ -65,20 +65,18 @@ class TableSchema {
   }
 
   int contains(String food) {
-    int index = -1;
-    for (final item in foods) {
-      index++;
-      if (item['name'] == food) {
+    for (int index = 0; index < foods.length; index++) {
+      if (foods[index]['name'] == food) {
         return index;
       }
     }
-    return -5;
+    return -1;
   }
 
   int howMuch(String food) {
     int pos = contains(food);
 
-    if (pos != -5) {
+    if (pos != -1) {
       return foods[pos]['noOfItem'] as int;
     } else {
       return 0;
@@ -87,7 +85,7 @@ class TableSchema {
 
   void add(String food, int quantity) {
     int pos = contains(food);
-    if (pos != -5) {
+    if (pos != -1) {
       int prev = foods[pos]['noOfItem'] as int;
       foods[pos]['noOfItem'] = quantity + prev;
     } else {
@@ -106,7 +104,7 @@ class TableSchema {
 
   void remove(String food, int quantity) {
     int pos = contains(food);
-    if (pos != -5) {
+    if (pos != -1) {
       int prev = foods[pos]['noOfItem'] as int;
       if (prev > 1) {
         foods[pos]['noOfItem'] = prev - quantity;
@@ -119,12 +117,25 @@ class TableSchema {
 
 class MenuSchema {
   //this is temporary initialization
-  final List<Map<String, Object>> menu = menuItem;
+  List<Map<String, dynamic>> menu = [];
   List<String> category = [];
+  MenuDB db = MenuDB();
 
   @override
   String toString() {
     return '$menu';
+  }
+
+  void populateMenu() async {
+    final List<Map<String, dynamic>> tempMenu = await db.getAllItems();
+    menu.clear();
+    for (final item in tempMenu) {
+      menu.add(item);
+    }
+  }
+
+  void addAllItems(List<Map<String, Object>> menuList) {
+    db.addAllItems(menuList);
   }
 
   void allCategory() {
@@ -160,67 +171,3 @@ class MenuSchema {
     updateByIndex(index: index, name: map['name'], price: map['price']);
   }
 }
-
-//now fill our tables with schema
-final List<Map<String, Object>> menuItem = [
-  {
-    'name': 'Chicken',
-    'price': 150.0,
-    'category': 'non-veg',
-  },
-  {
-    'name': 'Chicken MoMo',
-    'price': 150.0,
-    'category': 'non-veg',
-  },
-  {
-    'name': 'Chicken Chewmin',
-    'price': 150.0,
-    'category': 'non-veg',
-  },
-  {
-    'name': 'Chicken Thukpa',
-    'price': 150.0,
-    'category': 'non-veg',
-  },
-  {
-    'name': 'Water',
-    'category': 'Drinks',
-    'price': 25.0,
-  },
-  {
-    'name': 'aloo ko bhujiya tarkari ko jhol ra masu',
-    'category': 'non-veg',
-    'price': 100.0,
-  },
-  {
-    'name': 'ice cream',
-    'category': 'veg',
-    'price': 30.0,
-  },
-  {
-    'name': 'fruits',
-    'category': 'veg',
-    'price': 190.0,
-  },
-  {
-    'name': 'coffee',
-    'category': 'veg',
-    'price': 100.0,
-  },
-  {
-    'name': 'pakauda',
-    'category': 'veg',
-    'price': 10.0,
-  },
-  {
-    'name': 'fried rice',
-    'price': 35.0,
-    'category': 'veg',
-  },
-  {
-    'name': 'sel roti',
-    'price': 20.0,
-    'category': 'veg',
-  }
-];
