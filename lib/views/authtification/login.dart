@@ -70,7 +70,8 @@ class _LoginViewState extends State<LoginView> {
             padding: const EdgeInsets.all(10),
             child: TextField(
               controller: _email,
-              autocorrect: false,
+              autocorrect: true,
+              keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Username',
