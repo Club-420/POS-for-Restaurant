@@ -3,6 +3,7 @@ import 'package:pos/constants/test_data.dart';
 
 Widget menuWidget(BuildContext context) {
   final orientation = MediaQuery.of(context).orientation;
+  menu.populateMenu();
   return GridView.builder(
       itemCount: menu.menu.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -88,7 +89,7 @@ class EditMenu extends StatefulWidget {
 class _EditMenuState extends State<EditMenu> {
   @override
   Widget build(BuildContext context) {
-    final Map<String, Object> tempMenuItem = menu.menu[widget.index];
+    final Map<String, dynamic> tempMenuItem = menu.menu[widget.index];
     return Scaffold(
       backgroundColor: Colors.transparent,
       // resizeToAvoidBottomInset: false,

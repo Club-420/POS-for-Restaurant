@@ -259,7 +259,6 @@ class _IndividualTableState extends State<IndividualTable> {
                                 setState(() {
                                   tables.remove(tables[widget.index]
                                       .foods[index]['name']);
-                                  print(tables[widget.index].foods[index]);
                                 });
                               },
                               child: Container(
@@ -279,13 +278,6 @@ class _IndividualTableState extends State<IndividualTable> {
                                       MainAxisAlignment.spaceAround,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    // InkWell(
-                                    //   onDoubleTap: () {
-                                    //     tables.remove(
-                                    //         tables[widget.index].foods[index]);
-                                    //   },
-                                    //   child:
-                                    //name of item
                                     Flexible(
                                       flex: 2,
                                       child: SizedBox(
@@ -337,6 +329,7 @@ class _IndividualTableState extends State<IndividualTable> {
                                         width: double.infinity,
                                         child: Center(
                                           child: Text(
+                                            
                                             '  ${tables[widget.index].getItemTotalPrice(foodName: tables[widget.index].foods[index]['name'])}',
                                             style: TextStyle(
                                               color: Colors.teal,
