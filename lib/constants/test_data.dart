@@ -1,6 +1,9 @@
-final notifications = ['paneru muji is here'];
+final notifications = ['Notifications'];
 const noOfTables = 20;
-
+List<String> Categories = [
+  'Veg','Non-Veg','Drinks'
+];
+ String dropdownvalue = 'Veg';
 List tables = [];
 MenuSchema menu = MenuSchema();
 
@@ -165,17 +168,17 @@ final List<Map<String, Object>> menuItem = [
     'price': 150.0,
     'category': 'non-veg',
   },
-   {
+  {
     'name': 'Chicken MoMo',
     'price': 150.0,
     'category': 'non-veg',
   },
-   {
+  {
     'name': 'Chicken Chewmin',
     'price': 150.0,
     'category': 'non-veg',
   },
-   {
+  {
     'name': 'Chicken Thukpa',
     'price': 150.0,
     'category': 'non-veg',

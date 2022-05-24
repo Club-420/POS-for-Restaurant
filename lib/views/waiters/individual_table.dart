@@ -901,3 +901,4 @@ class _IndividualTableState extends State<IndividualTable> {
     );
   }
 }
+

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pos/constants/routes.dart';
 import 'package:pos/constants/test_data.dart';
@@ -36,13 +37,85 @@ class _TableViewState extends State<TableView> {
   //add value to notificaton
   @override
   Widget build(BuildContext context) {
+    List navbar = ['Home', 'Menu', 'Bill', 'Settings'];
     pages.add(tableWidget(context));
-    pages.add(menuWidget(context));
-    pages.add(billWidget(context));
+    pages.add(const menuWidget());
+    pages.add(const billwidget());
     pages.add(settingWidget(context));
-
+    var hello = '';
     return Scaffold(
+      floatingActionButton: _selectedIndex == 1
+          ? FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      var itemnameController = TextEditingController();
+                      var priceController = TextEditingController();
+
+                      return AlertDialog(
+                        title: const Text('Add Item'),
+                        content: Container(
+                          height: MediaQuery.of(context).size.height / 4,
+                          child: Column(
+                            children: [
+                              TextFormField(
+                                controller: itemnameController,
+                                decoration:
+                                    InputDecoration(hintText: 'Item Name'),
+                              ),
+                              TextFormField(
+                                controller: priceController,
+                                decoration: InputDecoration(hintText: 'Price'),
+                              ),
+                              DropdownButton(
+                                value: dropdownvalue,
+                                items: Categories.map((String item) {
+                                  return DropdownMenuItem<String>(
+                                    value: item,
+                                    child: Text(item),
+                                  );
+                                }).toList(),
+                                onChanged: (String? itemval) {
+                                  setState(() {
+                                    dropdownvalue = itemval!;
+                                  });
+                                },
+                              )
+                            ],
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              // Send them to your email maybe?
+                              var itemname = itemnameController.text;
+                              var price = priceController.text;
+
+                              if (itemname != '' && price != '') {
+                                setState(() {
+                                  
+                                });
+                              Navigator.pop(context);
+                              }
+                            },
+                            child: const Text('Save'),
+                          ),
+                        ],
+                      );
+                    });
+              },
+            )
+          : null,
       appBar: AppBar(
+        title: Text(navbar[_selectedIndex]),
+        centerTitle: true,
+        backgroundColor: Color.fromARGB(255, 49, 105, 131),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
@@ -75,33 +148,34 @@ class _TableViewState extends State<TableView> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home_max_outlined,
-              color: Colors.blue,
+              color: Colors.teal,
             ),
             label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.menu_book_outlined,
-              color: Colors.blue,
+              color: Colors.teal,
             ),
             label: 'Menus',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.money_outlined,
-              color: Colors.blue,
+              color: Colors.teal,
             ),
             label: 'Bill',
           ),
           BottomNavigationBarItem(
+            backgroundColor: Colors.white,
             icon: Icon(
               Icons.settings_outlined,
-              color: Colors.blue,
+              color: Colors.teal,
             ),
             label: 'Settings',
           )
         ],
-        // backgroundColor: Colors.green,
+        //  backgroundColor: Colors.green,
         selectedItemColor: Colors.teal,
         unselectedItemColor: Colors.grey,
         currentIndex: _selectedIndex,
@@ -197,16 +271,15 @@ Widget tableWidget(BuildContext context) {
       return Container(
         // width: double.infinity,
         // height: 20,
+
         margin: const EdgeInsets.all(15),
         decoration: BoxDecoration(
-            color: index.isEven ? Colors.grey : Colors.blueGrey,
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black,
-                offset: Offset(0, 1),
-                blurRadius: 6,
-              )
-            ]),
+          border: Border.all(color: Colors.grey, width: 0.5),
+          borderRadius: const BorderRadius.all(Radius.circular(7)),
+          color: tables[index].isOccupied
+              ? Color.fromARGB(255, 0, 0, 0)
+              : Colors.teal,
+        ),
         child: TextButton(
           onPressed: () {
             Navigator.of(context).pop();
@@ -218,25 +291,20 @@ Widget tableWidget(BuildContext context) {
               ),
             );
           },
-          child: Row(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Center(
-                child: Row(
-                  children: [
-                    Icon(
-                      tables[index].isOccupied ? Icons.check : null,
-                      size: 23,
-                      color: Colors.white,
-                    ),
-                    Text(
-                      'Table ${index + 1}',
-                      style: const TextStyle(
-                        fontSize: 15,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
+              const Icon(
+                Icons.restaurant_rounded,
+                size: 50,
+                color: Colors.white,
+              ),
+              Text(
+                'Table ${index + 1}',
+                style: const TextStyle(
+                  fontSize: 25,
+                  color: Colors.white,
                 ),
               ),
             ],
