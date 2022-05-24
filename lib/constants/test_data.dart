@@ -1,11 +1,10 @@
 import 'package:pos/database/db.dart';
+
 final notifications = ['Notifications'];
 
 const noOfTables = 20;
-List<String> Categories = [
-  'Veg','Non-Veg','Drinks'
-];
- String dropdownvalue = 'Veg';
+List<String> Categories = ['Veg', 'Non-Veg', 'Drinks'];
+String dropdownvalue = 'Veg';
 List tables = [];
 MenuSchema menu = MenuSchema();
 
@@ -124,6 +123,20 @@ class MenuSchema {
   @override
   String toString() {
     return '$menu';
+  }
+
+  void addSingleItem({required name, required price, required category}) {
+    if(!_checkContents(name)){
+      db.addSingleItem({'name':name,'price':price,'category':category});
+    }
+  }
+  bool _checkContents(String name) {
+    for (final item in menu) {
+      if (item['name'] == name) {
+        return true;
+      }
+    }
+    return false;
   }
 
   void populateMenu() async {

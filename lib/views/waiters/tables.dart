@@ -42,7 +42,7 @@ class _TableViewState extends State<TableView> {
     pages.add(const menuWidget());
     pages.add(const billwidget());
     pages.add(settingWidget(context));
-    var hello = '';
+  
     return Scaffold(
       floatingActionButton: _selectedIndex == 1
           ? FloatingActionButton(
@@ -99,9 +99,14 @@ class _TableViewState extends State<TableView> {
 
                               if (itemname != '' && price != '') {
                                 setState(() {
-                                  
+                                  menu.addSingleItem(
+                                      name: itemname,
+                                      price: price,
+                                      category: dropdownvalue);
                                 });
-                              Navigator.pop(context);
+                                Navigator.pop(context);
+                              
+                               
                               }
                             },
                             child: const Text('Save'),

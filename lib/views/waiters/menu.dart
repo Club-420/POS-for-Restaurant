@@ -11,8 +11,8 @@ class menuWidget extends StatefulWidget {
 class _menuWidgetState extends State<menuWidget> {
   @override
   Widget build(BuildContext context) {
+    menu.populateMenu();
     return Container(
-      
       child: GridView.builder(
           itemCount: menu.menu.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
