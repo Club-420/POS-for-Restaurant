@@ -1,12 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pos/constants/routes.dart';
 import 'package:pos/constants/test_data.dart';
 import 'package:pos/views/waiters/bill.dart';
 import 'package:pos/views/waiters/individual_table.dart';
 import 'package:pos/views/waiters/menu.dart';
 import 'package:pos/views/waiters/setting.dart';
-
+ var itemnameController = TextEditingController();
+                      var priceController = TextEditingController();
 class TableView extends StatefulWidget {
   const TableView({Key? key}) : super(key: key);
 
@@ -51,8 +53,7 @@ class _TableViewState extends State<TableView> {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      var itemnameController = TextEditingController();
-                      var priceController = TextEditingController();
+                     
 
                       return AlertDialog(
                         title: const Text('Add Item'),
@@ -60,29 +61,18 @@ class _TableViewState extends State<TableView> {
                           height: MediaQuery.of(context).size.height / 4,
                           child: Column(
                             children: [
+                              const dropdown(),
                               TextFormField(
                                 controller: itemnameController,
                                 decoration:
-                                    InputDecoration(hintText: 'Item Name'),
+                                    const InputDecoration(hintText: 'Item Name'),
                               ),
                               TextFormField(
+                                keyboardType:TextInputType.number,
                                 controller: priceController,
-                                decoration: InputDecoration(hintText: 'Price'),
+                                decoration: const InputDecoration(hintText: 'Price'),
                               ),
-                              DropdownButton(
-                                value: dropdownvalue,
-                                items: Categories.map((String item) {
-                                  return DropdownMenuItem<String>(
-                                    value: item,
-                                    child: Text(item),
-                                  );
-                                }).toList(),
-                                onChanged: (String? itemval) {
-                                  setState(() {
-                                    dropdownvalue = itemval!;
-                                  });
-                                },
-                              )
+                               
                             ],
                           ),
                         ),
@@ -218,7 +208,8 @@ Future<bool> showNotificationDialog(BuildContext context, String value) {
                   notifications.remove(value);
                   Navigator.of(context).pop(false);
                 },
-                child: const Text("Yes"))
+                child: const Text("Yes")),
+               
           ],
         );
       }).then((value) => value ?? false);
@@ -318,4 +309,33 @@ Widget tableWidget(BuildContext context) {
       );
     },
   );
+}
+class dropdown extends StatefulWidget {
+  const dropdown({ Key? key }) : super(key: key);
+
+  @override
+  State<dropdown> createState() => _dropdownState();
+}
+
+class _dropdownState extends State<dropdown> {
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton(
+                              value: dropdownvalue,
+                              items: Categories.map((String item) {
+                                return DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(item),
+                                );
+                              }).toList(),
+                              onChanged: (String? itemval) {
+                                
+                                  setState(() {
+                                    dropdownvalue = itemval!;
+                                  });
+                                  
+                                
+                              },
+                            );
+  }
 }
