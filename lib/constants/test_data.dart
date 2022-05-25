@@ -182,6 +182,10 @@ class MenuSchema {
     return;
   }
 
+  void deleteSingleItem({required name}) {
+    db.deleteSingleItem(name: name);
+  }
+
   void clean() {
     menu.clear();
   }

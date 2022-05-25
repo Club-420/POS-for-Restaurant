@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pos/constants/test_data.dart';
 
- // ignore: camel_case_types
- class billwidget extends StatefulWidget {
+// ignore: camel_case_types
+class billwidget extends StatefulWidget {
   const billwidget({Key? key}) : super(key: key);
 
   @override
@@ -14,43 +15,56 @@ class _billwidgetState extends State<billwidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-          // height: MediaQuery.of(context).size.height/1.1,
-          child: Row(
-        children: [
-          Flexible(
-              flex: 1,
-              child: Container(
-                child: ListView.builder(
-                    itemCount: 20,
-                    itemBuilder: ((context, index) {
-                      return Container(
-                        color: index == indexes ? Colors.white : Colors.teal,
-                        child: TextButton(
-                          onPressed: () {
-                            setState(() {
-                             
-                              indexes = index;
-                            });
-                          },
-                          child: Text(
-                            'Table ${index + 1}',
-                            style: TextStyle(
-                              color: index == indexes
-                                  ? Colors.black
-                                  : Colors.white,
-                              fontSize: 20,
-                            ),
+        // height: MediaQuery.of(context).size.height/1.1,
+        child: Row(
+      children: [
+        Flexible(
+            flex: 1,
+            child: Container(
+              child: ListView.builder(
+                  itemCount: 20,
+                  itemBuilder: ((context, index) {
+                    return Container(
+                      color: index == indexes ? Colors.white : Colors.teal,
+                      child: TextButton(
+                        onPressed: () {
+                          setState(() {
+                            indexes = index;
+                          });
+                        },
+                        child: Text(
+                          'Table ${index + 1}',
+                          style: TextStyle(
+                            color:
+                                index == indexes ? Colors.black : Colors.white,
+                            fontSize: 20,
                           ),
                         ),
-                      );
-                    })),
-              )),
-          Flexible(
-              flex: 9,
-              child: Container(
-                color: Colors.white,
-              ))
-        ],
-      ));
+                      ),
+                    );
+                  })),
+            )),
+            Flexible( flex:2,child: Container(  color: Colors.white,)),
+        Flexible(
+          flex: 4,
+          child: Container(
+            margin: EdgeInsets.all(10),
+            color: Colors.grey,
+            child: ListView.builder(
+                itemCount:TableSchema(index: indexes).foods.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    
+                    
+                    child: Text('${TableSchema(index: indexes).foods[index]}')
+                  );
+                }),
+          ),
+        ),
+         Flexible( flex:2,child: Container(
+             color: Colors.white,
+         )),
+      ],
+    ));
   }
 }

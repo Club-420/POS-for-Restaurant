@@ -101,82 +101,7 @@ class _menuWidgetState extends State<menuWidget> {
     );
   }
 }
-// Widget menuWidget(BuildContext context) {
 
-//   return Scaffold(
-
-//     body: GridView.builder(
-//         itemCount: menu.menu.length,
-//         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//           crossAxisCount: 5,
-//         ),
-//         itemBuilder: (context, index) {
-//           return Container(
-//             margin: const EdgeInsets.all(10),
-//             decoration: BoxDecoration(
-//               borderRadius: BorderRadius.circular(5),
-//               color: Colors.white,
-//               border: Border.all(color: Colors.grey, width: 1.5),
-//             ),
-//             child: Column(
-//               children: [
-//                 Row(
-//                   children: [
-
-//                     IconButton(
-//                       onPressed: () {
-//                         showDialog(
-//                             context: context,
-//                             builder: (context) => EditMenu(
-//                                   index: index,
-//                                 ));
-//                       },
-//                       icon: const Icon(
-//                         Icons.edit,
-//                         color: Colors.teal,
-//                         size: 20,
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//                 const FittedBox (
-//                   child: Image(
-//                     alignment: Alignment.center,
-//                     width: 80,
-//                     height: 80,
-//                     image: AssetImage(
-//                       'asset/images/loginView_logo.png',
-//                     ),
-//                   ),
-//                 ),
-//                 FittedBox(
-//                   child: Column(
-//                     children: [
-//                       Text(
-//                         '   ${menu.menu[index]['name']}\t\t\n',
-//                         style: const TextStyle(
-//                           fontWeight: FontWeight.bold,
-//                           color: Colors.teal,
-//                           fontSize: 15,
-//                         ),
-//                       ),
-//                       Text(
-//                         'Rs ${menu.menu[index]['price']}        \n',
-//                         style: const TextStyle(
-//                           fontWeight: FontWeight.bold,
-//                           color: Colors.teal,
-//                           fontSize: 15,
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 )
-//               ],
-//             ),
-//           );
-//         }),
-//   );
-// }
 class DeleteMenu extends StatefulWidget {
   const DeleteMenu({Key? key, required this.index}) : super(key: key);
   final index;
@@ -250,10 +175,8 @@ class _DeleteMenuState extends State<DeleteMenu> {
                   IconButton(
                     onPressed: () {
                       setState(() {
-                        // menu.updateByMap(
-                        //   index: widget.index,
-                        //   map: tempMenuItem,
-                        // );
+                        MenuSchema()
+                            .deleteSingleItem(name: tempMenuItem['name']);
                       });
                       Navigator.pop(context);
                     },
@@ -390,7 +313,6 @@ class _EditMenuState extends State<EditMenu> {
                   IconButton(
                     onPressed: () {
                       setState(() {
-                        
                         menu.addSingleItem(
                             name: _itemname.text,
                             price: _itemprice.text,
