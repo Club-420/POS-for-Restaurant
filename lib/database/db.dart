@@ -13,6 +13,17 @@ class TableDB {
     await db.collection('tables').doc('table $index').set(tableData);
   }
 
+  Future<void> removeSingleItem(
+      {required int index, required String itemName}) async {
+    final db = FirebaseFirestore.instance;
+    await db
+        .collection('tables')
+        .doc('table $index')
+        .collection('foodsColl $index')
+        .doc(itemName)
+        .delete();
+  }
+
   Future<void> addSingleItem(
       {required int index,
       required double itemPrice,
@@ -33,10 +44,10 @@ class TableDB {
             .doc('table $index')
             .collection('foodsColl $index')
             .doc(foodName)
-            .update({'noOfItem': FieldValue.increment(1),
-            'price':FieldValue.increment(itemPrice)});
-
-            
+            .update({
+          'noOfItem': FieldValue.increment(1),
+          'price': FieldValue.increment(itemPrice)
+        });
       } else {
         db
             .collection('tables')
@@ -45,11 +56,10 @@ class TableDB {
             .doc(foodName)
             .set({
           'noOfItem': 1,
-          'price':itemPrice,
+          'price': itemPrice,
         });
       }
     });
-
   }
 
   void updateStatusOfTable({required int index, required bool status}) {

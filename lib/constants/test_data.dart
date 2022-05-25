@@ -29,6 +29,11 @@ class TableSchema {
     print(singleTable);
   }
 
+  Future<void> removeSingleItem(
+      {required int index, required String itemName}) async {
+    db.removeSingleItem(index: index, itemName: itemName);
+  }
+
   Future<void> fetchAllTables() async {
     final List<Map<String, dynamic>> tempMenu = await db.getAllTables();
     tables.clear();
@@ -123,8 +128,12 @@ class TableSchema {
   }
 
 //add food item to the list
-  void add({required int index,required double itemPrice, required String foodName}) async {
-    db.addSingleItem(index: index, itemPrice:itemPrice,foodName: foodName, noOfItem: 1);
+  void add(
+      {required int index,
+      required double itemPrice,
+      required String foodName}) async {
+    db.addSingleItem(
+        index: index, itemPrice: itemPrice, foodName: foodName, noOfItem: 1);
 
     // int pos = contains(food);
     // if (pos != -1) {

@@ -184,7 +184,8 @@ class _IndividualTableState extends State<IndividualTable> {
                                       if (tableSchema.isOccupied(
                                           index: widget.index)) {
                                         tableSchema.add(
-                                          itemPrice:menu.menu[index]['price'],
+                                            itemPrice: menu.menu[index]
+                                                ['price'],
                                             index: widget.index,
                                             foodName: menu.menu[index]['name']);
                                       }
@@ -276,8 +277,6 @@ class _IndividualTableState extends State<IndividualTable> {
                                     .collection('foodsColl ${widget.index}')
                                     .snapshots(),
                                 builder: (context, snapshot) {
-                                  
-
                                   return ListView.builder(
                                     itemCount: snapshot.data?.docs.length,
                                     itemBuilder: (context, index) {
@@ -287,11 +286,50 @@ class _IndividualTableState extends State<IndividualTable> {
                                       } else {
                                         return InkWell(
                                           onDoubleTap: () {
-                                            // setState(() {
-                                            //   tableSchema.tables.remove(tableSchema
-                                            //       .tables[widget.index]
-                                            //       .foods[index]['name']);
-                                            // });
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    AlertDialog(
+                                                      content:
+                                                          Text("are you sure?"),
+                                                      actions: [
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            IconButton(
+                                                                onPressed: () {
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop();
+                                                                },
+                                                                icon: Icon(
+                                                                  Icons.cancel,
+                                                                )),
+                                                            IconButton(
+                                                                onPressed: () {
+                                                                  tableSchema.removeSingleItem(
+                                                                      index: widget
+                                                                          .index,
+                                                                      itemName: (snapshot
+                                                                          .data
+                                                                          ?.docs[
+                                                                              index]
+                                                                          .id)!);
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop();
+                                                                },
+                                                                icon: Icon(
+                                                                    Icons.save))
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ));
                                           },
                                           child: Container(
                                             margin: const EdgeInsets.all(5),
