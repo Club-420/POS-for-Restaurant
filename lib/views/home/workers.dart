@@ -15,6 +15,10 @@ class WorkersView extends StatefulWidget {
 class _WorkersViewState extends State<WorkersView> {
   @override
   Widget build(BuildContext context) {
+    menu.populateMenu();
+    tableSchema.fetchAllTables();
+    // tableSchema.populate();
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(

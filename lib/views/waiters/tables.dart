@@ -7,8 +7,10 @@ import 'package:pos/views/waiters/bill.dart';
 import 'package:pos/views/waiters/individual_table.dart';
 import 'package:pos/views/waiters/menu.dart';
 import 'package:pos/views/waiters/setting.dart';
- var itemnameController = TextEditingController();
-                      var priceController = TextEditingController();
+
+var itemnameController = TextEditingController();
+var priceController = TextEditingController();
+
 class TableView extends StatefulWidget {
   const TableView({Key? key}) : super(key: key);
 
@@ -44,7 +46,7 @@ class _TableViewState extends State<TableView> {
     pages.add(const menuWidget());
     pages.add(const billwidget());
     pages.add(settingWidget(context));
-  
+
     return Scaffold(
       floatingActionButton: _selectedIndex == 1
           ? FloatingActionButton(
@@ -53,8 +55,6 @@ class _TableViewState extends State<TableView> {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                     
-
                       return AlertDialog(
                         title: const Text('Add Item'),
                         content: Container(
@@ -64,15 +64,15 @@ class _TableViewState extends State<TableView> {
                               const dropdown(),
                               TextFormField(
                                 controller: itemnameController,
-                                decoration:
-                                    const InputDecoration(hintText: 'Item Name'),
+                                decoration: const InputDecoration(
+                                    hintText: 'Item Name'),
                               ),
                               TextFormField(
-                                keyboardType:TextInputType.number,
+                                keyboardType: TextInputType.number,
                                 controller: priceController,
-                                decoration: const InputDecoration(hintText: 'Price'),
+                                decoration:
+                                    const InputDecoration(hintText: 'Price'),
                               ),
-                               
                             ],
                           ),
                         ),
@@ -95,8 +95,6 @@ class _TableViewState extends State<TableView> {
                                       category: dropdownvalue);
                                 });
                                 Navigator.pop(context);
-                              
-                               
                               }
                             },
                             child: const Text('Save'),
@@ -209,7 +207,6 @@ Future<bool> showNotificationDialog(BuildContext context, String value) {
                   Navigator.of(context).pop(false);
                 },
                 child: const Text("Yes")),
-               
           ],
         );
       }).then((value) => value ?? false);
@@ -236,7 +233,8 @@ Future<bool> showCheckoutDialog(BuildContext context, {required index}) {
           TextButton(
               onPressed: () {
                 //clear the table
-                tables[index].clear();
+                tableSchema.clear(index: index);
+                // tableSchema.tables[index].clear();
                 Navigator.of(context).pushNamedAndRemoveUntil(
                   tableRoute,
                   (route) => false,
@@ -251,67 +249,66 @@ Future<bool> showCheckoutDialog(BuildContext context, {required index}) {
 
 //table widget
 Widget tableWidget(BuildContext context) {
-  //populate the tables with schema
-  for (int index = 0; index < noOfTables; index++) {
-    tables.add(
-      TableSchema(index: index),
-    );
-  }
-
-  return GridView.builder(
-    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: MediaQuery.of(context).size.width > 500 ? 5 : 2,
-    ),
-    itemCount: noOfTables,
-    itemBuilder: (context, index) {
-      return Container(
-        // width: double.infinity,
-        // height: 20,
-
-        margin: const EdgeInsets.all(15),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey, width: 0.5),
-          borderRadius: const BorderRadius.all(Radius.circular(7)),
-          color: tables[index].isOccupied
-              ? Color.fromARGB(255, 0, 0, 0)
-              : Colors.teal,
+  return FutureBuilder(
+    future: tableSchema.fetchAllTables(),
+    builder: (context, snapshot) {
+      return GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: MediaQuery.of(context).size.width > 500 ? 5 : 2,
         ),
-        child: TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => IndividualTable(
-                  index: index,
-                ),
+        itemCount: tableSchema.tables.length,
+        itemBuilder: (context, index) {
+          return Container(
+            // width: double.infinity,
+            // height: 20,
+
+            margin: const EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey, width: 0.5),
+              borderRadius: const BorderRadius.all(Radius.circular(7)),
+              color: tableSchema.isOccupied(index: index)
+                  ? const Color.fromARGB(255, 0, 0, 0)
+                  : Colors.teal,
+            ),
+            child: TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => IndividualTable(
+                      index: index,
+                    ),
+                  ),
+                );
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.restaurant_rounded,
+                    size: 50,
+                    color: Colors.white,
+                  ),
+                  Text(
+                    'Table ${index + 1}',
+                    style: const TextStyle(
+                      fontSize: 25,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
-            );
-          },
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.restaurant_rounded,
-                size: 50,
-                color: Colors.white,
-              ),
-              Text(
-                'Table ${index + 1}',
-                style: const TextStyle(
-                  fontSize: 25,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       );
     },
   );
 }
+
 class dropdown extends StatefulWidget {
-  const dropdown({ Key? key }) : super(key: key);
+  const dropdown({Key? key}) : super(key: key);
 
   @override
   State<dropdown> createState() => _dropdownState();
@@ -321,21 +318,18 @@ class _dropdownState extends State<dropdown> {
   @override
   Widget build(BuildContext context) {
     return DropdownButton(
-                              value: dropdownvalue,
-                              items: Categories.map((String item) {
-                                return DropdownMenuItem<String>(
-                                  value: item,
-                                  child: Text(item),
-                                );
-                              }).toList(),
-                              onChanged: (String? itemval) {
-                                
-                                  setState(() {
-                                    dropdownvalue = itemval!;
-                                  });
-                                  
-                                
-                              },
-                            );
+      value: dropdownvalue,
+      items: Categories.map((String item) {
+        return DropdownMenuItem<String>(
+          value: item,
+          child: Text(item),
+        );
+      }).toList(),
+      onChanged: (String? itemval) {
+        setState(() {
+          dropdownvalue = itemval!;
+        });
+      },
+    );
   }
 }

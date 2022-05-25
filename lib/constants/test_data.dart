@@ -5,21 +5,59 @@ final notifications = ['Notifications'];
 const noOfTables = 20;
 List<String> Categories = ['Veg', 'Non-Veg', 'Drinks'];
 String dropdownvalue = 'Veg';
-List tables = [];
+// List tables = [];
 MenuSchema menu = MenuSchema();
+TableSchema tableSchema = TableSchema();
 
 class TableSchema {
-  final int index;
+  List tables = [];
 
-  TableSchema({required this.index});
   //otherdatas
+  int index = -1;
   String? name;
-  bool isOccupied = false;
+  //bool isOccupied = false;
   List<Map<String, Object>> foods = [];
+
+//database
+  TableDB db = TableDB();
+
+  Future<void> fetchAllTables() async {
+    final List<Map<String, dynamic>> tempMenu = await db.getAllTables();
+    tables.clear();
+    for (final item in tempMenu) {
+      tables.add(item);
+    }
+
+    //sort the tables according to index
+    tables.sort((a, b) => (a['index']).compareTo(b['index']));
+  }
+
+  Future<void> fetchSingleTable({required int index}) async {
+    final temp = await db.getSingleTable(index: index);
+    tables[index] = temp;
+  }
+
+  void updateSingleTable(
+      {required int index, required Map<String, dynamic> tableData}) {
+    db.updateSingleTable(index: index, tableData: tableData);
+  }
+
+  void updateStatusOfTable({required int index, required bool status}) {
+    db.updateStatusOfTable(index: index, status: status);
+  }
+
+  //populate table
+  void populate() {
+    db.addAllTables();
+  }
+
+  bool isOccupied({required int index}) {
+    return tables[index]['isOccupied'];
+  }
 
   @override
   String toString() {
-    return 'index: $index, name: $name, foods: ${foods.toString()}';
+    return ', name: $name, foods: ${foods.toString()}';
   }
 
   double getitemPrice({required String foodName}) {
@@ -57,10 +95,9 @@ class TableSchema {
     return sum;
   }
 
-  void clear() {
-    name = null;
-    foods = [];
-    isOccupied = false;
+//this function has to be updated later on
+  void clear({required int index}) {
+    db.cleanSingleTable(index: index);
   }
 
   int contains(String food) {

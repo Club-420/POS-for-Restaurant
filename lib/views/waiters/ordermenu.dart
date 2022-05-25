@@ -13,7 +13,7 @@ class OrderMenu extends StatefulWidget {
 }
 
 class _OrderMenuState extends State<OrderMenu> {
-  final TableSchema foodItems = TableSchema(index: 0);
+  final TableSchema foodItems = TableSchema();
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +127,7 @@ class _OrderMenuState extends State<OrderMenu> {
                 const Spacer(),
                 IconButton(
                   onPressed: () {
-                    tables[widget.index].addFoodList(foodItems.foods);
+                    tableSchema.tables[widget.index].addFoodList(foodItems.foods);
                     Navigator.pop(context);
                     Navigator.pop(context);
                     Navigator.of(context).push(

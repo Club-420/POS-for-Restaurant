@@ -12,7 +12,9 @@ class _KitchenViewState extends State<KitchenView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Kitchen'),),
-      
+      body: Container(
+        
+      ),
     );
   }
 }
