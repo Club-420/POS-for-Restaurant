@@ -21,7 +21,6 @@ class _IndividualTableState extends State<IndividualTable> {
     return FutureBuilder(
       future: tableSchema.getSingleTable(index: widget.index),
       builder: (context, snapshot) {
-        print('${tableSchema.tables[widget.index]}');
         return Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
@@ -37,7 +36,11 @@ class _IndividualTableState extends State<IndividualTable> {
               },
             ),
             title: Text(
-              'Table ${widget.index + 1}',
+              'Table ${tableSchema.tables[widget.index]['index'] + 1}',
+              style: const TextStyle(
+                fontSize: 25,
+                color: Colors.white,
+              ),
             ),
             centerTitle: true,
             actions: [
@@ -69,16 +72,15 @@ class _IndividualTableState extends State<IndividualTable> {
                           autocorrect: false,
                           onSubmitted: (value) {
                             setState(() {
-                              tableSchema.tables[widget.index].name = value;
-                              tableSchema.updateStatusOfTable(
-                                  index: widget.index, status: true);
+                              tableSchema.updateCustomerName(
+                                  index: widget.index, customerName: value);
                             });
                           },
-                          decoration: InputDecoration(
-                            border: const OutlineInputBorder(),
-                            //hintText: tableSchema.tables[widget.index].name ??
-                            //    'Enter Customer Name',
-                            hintStyle: const TextStyle(
+                          decoration:  InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: tableSchema.tables[widget.index]['name'] ??
+                            'Enter Customer Name',
+                            hintStyle: TextStyle(
                               fontSize: 20,
                             ),
                           ),
@@ -172,12 +174,12 @@ class _IndividualTableState extends State<IndividualTable> {
                                 ],
                               ),
                               onTap: () {
-                                
                                 //first check if the table is occupied
-                                  if (tableSchema.tables[widget.index].isOccupied) {
+                                if (tableSchema
+                                    .tables[widget.index].isOccupied) {
                                   setState(() {
                                     // tableSchema.updateSingleTable(index: widget.index, tableData: )
-                                        tableSchema.tables[widget.index]
+                                    tableSchema.tables[widget.index]
                                         .add(menu.menu[index]['name'], 1);
                                   });
                                 }

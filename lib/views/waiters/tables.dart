@@ -231,14 +231,16 @@ Future<bool> showCheckoutDialog(BuildContext context, {required index}) {
               },
               child: const Text("Cancel")),
           TextButton(
-              onPressed: () {
+              onPressed: () async {
                 //clear the table
-                tableSchema.clear(index: index);
-                // tableSchema.tables[index].clear();
-                Navigator.of(context).pushNamedAndRemoveUntil(
+                await tableSchema.clear(index: index);
+                tableSchema.fetchAllTables().then((value) {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
                   tableRoute,
                   (route) => false,
                 );
+                });
+                
               },
               child: const Text("Yes"))
         ],
@@ -291,7 +293,7 @@ Widget tableWidget(BuildContext context) {
                     color: Colors.white,
                   ),
                   Text(
-                    'Table ${index + 1}',
+                    'Table ${tableSchema.tables[index]['index'] + 1}',
                     style: const TextStyle(
                       fontSize: 25,
                       color: Colors.white,

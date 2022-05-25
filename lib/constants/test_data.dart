@@ -104,8 +104,8 @@ class TableSchema {
   }
 
 //this function has to be updated later on
-  void clear({required int index}) {
-    db.cleanSingleTable(index: index);
+  Future<void> clear({required int index}) async {
+    await db.cleanSingleTable(index: index);
   }
 
   int contains(String food) {
@@ -156,6 +156,12 @@ class TableSchema {
         foods.removeAt(pos);
       }
     }
+  }
+
+  //update customerName
+  Future<void> updateCustomerName(
+    {required int index, required String customerName}) async {
+    db.updateCustomerName(index: index, customerName: customerName);
   }
 }
 
