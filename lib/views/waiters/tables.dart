@@ -238,13 +238,14 @@ Future<bool> showCheckoutDialog(BuildContext context, {required index}) {
           TextButton(
               onPressed: () async {
                 //clear the table
-                await tableSchema.clear(index: index);
-                tableSchema.fetchAllTables().then((value) {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    tableRoute,
-                    (route) => false,
-                  );
-                });
+                tableSchema.clear(index: index);
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  tableRoute,
+                  (route) => false,
+                );
+                // tableSchema.fetchAllTables().then((value) {
+
+                // });
               },
               child: const Text("Yes"))
         ],

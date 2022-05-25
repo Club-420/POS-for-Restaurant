@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pos/views/waiters/menu.dart';
 import 'package:pos/views/waiters/ordermenu.dart';
@@ -76,10 +77,11 @@ class _IndividualTableState extends State<IndividualTable> {
                                   index: widget.index, customerName: value);
                             });
                           },
-                          decoration:  InputDecoration(
+                          decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            hintText: tableSchema.tables[widget.index]['name'] ??
-                            'Enter Customer Name',
+                            hintText: tableSchema.tables[widget.index]
+                                    ['name'] ??
+                                'Enter Customer Name',
                             hintStyle: TextStyle(
                               fontSize: 20,
                             ),
@@ -114,85 +116,84 @@ class _IndividualTableState extends State<IndividualTable> {
                           color: Colors.white,
                           border: Border.all(color: Colors.grey, width: 1.5)),
                       child: FutureBuilder(
-                        future:menu.populateMenu(),
-                        builder: (context, snapshot) {
-                          return GridView.builder(
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 4,
-                            ),
-                            itemCount: menu.menu.length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                margin: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Colors.white,
-                                    border:
-                                        Border.all(color: Colors.grey, width: 0.5)),
-                                child: InkWell(
-                                  child: Column(
-                                    // mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Flexible(
-                                        flex: 3,
-                                        child: Image.asset(
-                                            'asset/images/loginView_logo.png'),
-                                      ),
-                                      Flexible(
-                                        flex: 1,
-                                        child: FittedBox(
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                '${menu.menu[index]['name']}',
-                                                style: TextStyle(
-                                                  fontSize: MediaQuery.of(context)
-                                                              .size
-                                                              .width >
-                                                          500
-                                                      ? 20
-                                                      : 10,
-                                                  color: Colors.teal,
-                                                ),
-                                              ),
-                                              Text(
-                                                '  Rs. ${menu.menu[index]['price']}',
-                                                style: TextStyle(
-                                                  fontSize: MediaQuery.of(context)
-                                                              .size
-                                                              .width >
-                                                          500
-                                                      ? 20
-                                                      : 10,
-                                                  color: Colors.teal,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                          future: menu.populateMenu(),
+                          builder: (context, snapshot) {
+                            return GridView.builder(
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 4,
+                              ),
+                              itemCount: menu.menu.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  margin: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Colors.white,
+                                      border: Border.all(
+                                          color: Colors.grey, width: 0.5)),
+                                  child: InkWell(
+                                    child: Column(
+                                      children: [
+                                        Flexible(
+                                          flex: 3,
+                                          child: Image.asset(
+                                              'asset/images/loginView_logo.png'),
                                         ),
-                                      )
-                                    ],
+                                        Flexible(
+                                          flex: 1,
+                                          child: FittedBox(
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  '${menu.menu[index]['name']}',
+                                                  style: TextStyle(
+                                                    fontSize:
+                                                        MediaQuery.of(context)
+                                                                    .size
+                                                                    .width >
+                                                                500
+                                                            ? 20
+                                                            : 10,
+                                                    color: Colors.teal,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '  Rs. ${menu.menu[index]['price']}',
+                                                  style: TextStyle(
+                                                    fontSize:
+                                                        MediaQuery.of(context)
+                                                                    .size
+                                                                    .width >
+                                                                500
+                                                            ? 20
+                                                            : 10,
+                                                    color: Colors.teal,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    onTap: () {
+                                      //first check if the table is occupied
+                                      if (tableSchema.isOccupied(
+                                          index: widget.index)) {
+                                        tableSchema.add(
+                                          itemPrice:menu.menu[index]['price'],
+                                            index: widget.index,
+                                            foodName: menu.menu[index]['name']);
+                                      }
+                                    },
                                   ),
-                                  onTap: () {
-                                    //first check if the table is occupied
-                                    if (tableSchema
-                                        .tables[widget.index].isOccupied) {
-                                      setState(() {
-                                        // tableSchema.updateSingleTable(index: widget.index, tableData: )
-                                        tableSchema.tables[widget.index]
-                                            .add(menu.menu[index]['name'], 1);
-                                      });
-                                    }
-                                  },
-                                ),
-                              );
-                            },
-                          );
-                        }
-                      ),
+                                );
+                              },
+                            );
+                          }),
                     ),
                   ),
 
@@ -268,113 +269,127 @@ class _IndividualTableState extends State<IndividualTable> {
                           SizedBox(
                             width: double.infinity,
                             height: MediaQuery.of(context).size.height / 1.5,
-                            child: ListView.builder(
-                              itemCount: tableSchema
-                                  .tables[widget.index]['foods'].length,
-                              itemBuilder: (context, index) {
-                                return InkWell(
-                                  onDoubleTap: () {
-                                    // setState(() {
-                                    //   tableSchema.tables.remove(tableSchema
-                                    //       .tables[widget.index]
-                                    //       .foods[index]['name']);
-                                    // });
-                                  },
-                                  child: Container(
-                                    margin: const EdgeInsets.all(5),
-                                    height: 50,
-                                    decoration: const BoxDecoration(
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          color: Colors.grey,
-                                          width: 0.5,
-                                        ),
-                                      ),
-                                      color: Colors.white,
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Flexible(
-                                          flex: 2,
-                                          child: SizedBox(
-                                            width: double.infinity,
-                                            child: Center(
-                                              child: Text(
-                                                'food',
-                                                // '${tableSchema.tables[widget.index].foods[index]['name']}',
-                                                style: TextStyle(
-                                                  color: Colors.teal,
-                                                  fontSize:
-                                                      MediaQuery.of(context)
-                                                                  .size
-                                                                  .width >
-                                                              550
-                                                          ? 15
-                                                          : 10,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        // ),
-                                        //no of item
-                                        Flexible(
-                                          flex: 1,
-                                          child: SizedBox(
-                                            width: double.infinity,
-                                            child: Center(
-                                              child: Text(
-                                                'how much',
-                                                // '   ${tableSchema.tables[widget.index].howMuch(tableSchema.tables[widget.index].foods[index]['name'])}',
-                                                style: TextStyle(
-                                                  color: Colors.teal,
-                                                  fontSize:
-                                                      MediaQuery.of(context)
-                                                                  .size
-                                                                  .width >
-                                                              550
-                                                          ? 15
-                                                          : 10,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
+                            child: StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('tables')
+                                    .doc('table ${widget.index}')
+                                    .collection('foodsColl ${widget.index}')
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  
 
-                                        //total item price
-
-                                        Flexible(
-                                          flex: 2,
-                                          child: SizedBox(
-                                            width: double.infinity,
-                                            child: Center(
-                                              child: Text(
-                                                'paisa',
-                                                // '  ${tableSchema.tables[widget.index].getItemTotalPrice(foodName: tableSchema.tables[widget.index].foods[index]['name'])}',
-                                                style: TextStyle(
-                                                  color: Colors.teal,
-                                                  fontSize:
-                                                      MediaQuery.of(context)
-                                                                  .size
-                                                                  .width >
-                                                              550
-                                                          ? 15
-                                                          : 10,
+                                  return ListView.builder(
+                                    itemCount: snapshot.data?.docs.length,
+                                    itemBuilder: (context, index) {
+                                      if (snapshot.data?.docs[index].id ==
+                                          'test') {
+                                        return Container();
+                                      } else {
+                                        return InkWell(
+                                          onDoubleTap: () {
+                                            // setState(() {
+                                            //   tableSchema.tables.remove(tableSchema
+                                            //       .tables[widget.index]
+                                            //       .foods[index]['name']);
+                                            // });
+                                          },
+                                          child: Container(
+                                            margin: const EdgeInsets.all(5),
+                                            height: 50,
+                                            decoration: const BoxDecoration(
+                                              border: Border(
+                                                bottom: BorderSide(
+                                                  color: Colors.grey,
+                                                  width: 0.5,
                                                 ),
                                               ),
+                                              color: Colors.white,
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Flexible(
+                                                  flex: 2,
+                                                  child: SizedBox(
+                                                    width: double.infinity,
+                                                    child: Center(
+                                                      child: Text(
+                                                        '${snapshot.data?.docs[index].id}',
+                                                        // '${tableSchema.tables[widget.index].foods[index]['name']}',
+                                                        style: TextStyle(
+                                                          color: Colors.teal,
+                                                          fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width >
+                                                                  550
+                                                              ? 15
+                                                              : 10,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                // ),
+                                                //no of item
+                                                Flexible(
+                                                  flex: 1,
+                                                  child: SizedBox(
+                                                    width: double.infinity,
+                                                    child: Center(
+                                                      child: Text(
+                                                        '${snapshot.data?.docs[index]['noOfItem']}',
+                                                        // '   ${tableSchema.tables[widget.index].howMuch(tableSchema.tables[widget.index].foods[index]['name'])}',
+                                                        style: TextStyle(
+                                                          color: Colors.teal,
+                                                          fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width >
+                                                                  550
+                                                              ? 15
+                                                              : 10,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+
+                                                //total item price
+
+                                                Flexible(
+                                                  flex: 2,
+                                                  child: SizedBox(
+                                                    width: double.infinity,
+                                                    child: Center(
+                                                      child: Text(
+                                                        '${snapshot.data?.docs[index]['price']}',
+                                                        // '  ${tableSchema.tables[widget.index].getItemTotalPrice(foodName: tableSchema.tables[widget.index].foods[index]['name'])}',
+                                                        style: TextStyle(
+                                                          color: Colors.teal,
+                                                          fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width >
+                                                                  550
+                                                              ? 15
+                                                              : 10,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
+                                        );
+                                      }
+                                    },
+                                  );
+                                }),
                           ),
 
                           // total price

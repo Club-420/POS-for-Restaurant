@@ -84,10 +84,10 @@ class _OrderMenuState extends State<OrderMenu> {
                         const Spacer(),
                         IconButton(
                           onPressed: () {
-                            setState(() {
-                              foodItems.add(
-                                  menu.menu[index]['name'] as String, 1);
-                            });
+                            // setState(() {
+                            //   foodItems.add(
+                            //       menu.menu[index]['name'] as String, 1);
+                            // });
                           },
                           icon: const Icon(
                             Icons.add,
