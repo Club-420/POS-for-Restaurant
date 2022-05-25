@@ -22,7 +22,10 @@ class TableDB {
     // foods['foods']['name'] = foodName;
     // foods['foods']['noOfItems'] = foodName;
 
-    await db.collection('tables').doc('table $index').update({'foods': foods['foods']});
+    await db
+        .collection('tables')
+        .doc('table $index')
+        .update({'foods': foods['foods']});
   }
 
   void updateStatusOfTable({required int index, required bool status}) {
@@ -30,9 +33,13 @@ class TableDB {
     db.collection('tables').doc('table $index').update({'isOccupied': status});
   }
 
-  void cleanSingleTable({required int index}) {
-    final db = FirebaseFirestore.instance;
-    updateSingleTable(index: index, tableData: tableModel);
+  Future<void> cleanSingleTable({required int index}) async {
+    await updateSingleTable(index: index, tableData: {
+      'index': index,
+      'name': '',
+      'isOccupied': false,
+      'foods': [{}],
+    });
   }
 
   Future<Map<String, dynamic>> getSingleTable({required int index}) async {
@@ -51,7 +58,12 @@ class TableDB {
     //for now we have twenty tables
     for (int i = 0; i < 20; i++) {
       tableModel['index'] = i;
-      db.collection('tables').doc('table $i').set(tableModel);
+      db.collection('tables').doc('table $i').set({
+        'index': i,
+        'name': '',
+        'isOccupied': false,
+        'foods': [{}],
+      });
     }
   }
 
@@ -65,8 +77,16 @@ class TableDB {
     });
     return tempList;
   }
+
+  //to update name in database
+  Future<void> updateCustomerName(
+      {required int index, required String customerName}) async {
+    final db = FirebaseFirestore.instance;
+    db.collection('tables').doc('table $index').update({'name': customerName,'isOccupied':true});
+  }
 }
 
+//Menu database
 class MenuDB {
   void addAllItems(List<Map<String, dynamic>> menuList) {
     final db = FirebaseFirestore.instance;
