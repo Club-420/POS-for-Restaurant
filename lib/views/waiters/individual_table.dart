@@ -113,80 +113,85 @@ class _IndividualTableState extends State<IndividualTable> {
                           borderRadius: BorderRadius.circular(5),
                           color: Colors.white,
                           border: Border.all(color: Colors.grey, width: 1.5)),
-                      child: GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 4,
-                        ),
-                        itemCount: menu.menu.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            margin: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: Colors.white,
-                                border:
-                                    Border.all(color: Colors.grey, width: 0.5)),
-                            child: InkWell(
-                              child: Column(
-                                // mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Flexible(
-                                    flex: 3,
-                                    child: Image.asset(
-                                        'asset/images/loginView_logo.png'),
-                                  ),
-                                  Flexible(
-                                    flex: 1,
-                                    child: FittedBox(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            '${menu.menu[index]['name']}',
-                                            style: TextStyle(
-                                              fontSize: MediaQuery.of(context)
-                                                          .size
-                                                          .width >
-                                                      500
-                                                  ? 20
-                                                  : 10,
-                                              color: Colors.teal,
-                                            ),
-                                          ),
-                                          Text(
-                                            '  Rs. ${menu.menu[index]['price']}',
-                                            style: TextStyle(
-                                              fontSize: MediaQuery.of(context)
-                                                          .size
-                                                          .width >
-                                                      500
-                                                  ? 20
-                                                  : 10,
-                                              color: Colors.teal,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              onTap: () {
-                                //first check if the table is occupied
-                                if (tableSchema
-                                    .tables[widget.index].isOccupied) {
-                                  setState(() {
-                                    // tableSchema.updateSingleTable(index: widget.index, tableData: )
-                                    tableSchema.tables[widget.index]
-                                        .add(menu.menu[index]['name'], 1);
-                                  });
-                                }
-                              },
+                      child: FutureBuilder(
+                        future:menu.populateMenu(),
+                        builder: (context, snapshot) {
+                          return GridView.builder(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4,
                             ),
+                            itemCount: menu.menu.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                margin: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: Colors.white,
+                                    border:
+                                        Border.all(color: Colors.grey, width: 0.5)),
+                                child: InkWell(
+                                  child: Column(
+                                    // mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Flexible(
+                                        flex: 3,
+                                        child: Image.asset(
+                                            'asset/images/loginView_logo.png'),
+                                      ),
+                                      Flexible(
+                                        flex: 1,
+                                        child: FittedBox(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                '${menu.menu[index]['name']}',
+                                                style: TextStyle(
+                                                  fontSize: MediaQuery.of(context)
+                                                              .size
+                                                              .width >
+                                                          500
+                                                      ? 20
+                                                      : 10,
+                                                  color: Colors.teal,
+                                                ),
+                                              ),
+                                              Text(
+                                                '  Rs. ${menu.menu[index]['price']}',
+                                                style: TextStyle(
+                                                  fontSize: MediaQuery.of(context)
+                                                              .size
+                                                              .width >
+                                                          500
+                                                      ? 20
+                                                      : 10,
+                                                  color: Colors.teal,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    //first check if the table is occupied
+                                    if (tableSchema
+                                        .tables[widget.index].isOccupied) {
+                                      setState(() {
+                                        // tableSchema.updateSingleTable(index: widget.index, tableData: )
+                                        tableSchema.tables[widget.index]
+                                            .add(menu.menu[index]['name'], 1);
+                                      });
+                                    }
+                                  },
+                                ),
+                              );
+                            },
                           );
-                        },
+                        }
                       ),
                     ),
                   ),

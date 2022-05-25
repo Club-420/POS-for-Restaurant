@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pos/auth/firebase_auth_provider.dart';
 
 Map<String, dynamic> tableModel = {
   'index': 0,
@@ -82,7 +83,10 @@ class TableDB {
   Future<void> updateCustomerName(
       {required int index, required String customerName}) async {
     final db = FirebaseFirestore.instance;
-    db.collection('tables').doc('table $index').update({'name': customerName,'isOccupied':true});
+    db
+        .collection('tables')
+        .doc('table $index')
+        .update({'name': customerName, 'isOccupied': true});
   }
 }
 
@@ -105,6 +109,12 @@ class MenuDB {
   void deleteSingleItem({required String name}) {
     final db = FirebaseFirestore.instance;
     db.collection('menu').doc(name).delete();
+  }
+
+  void updateSingleItem(
+      {required String oldName, required Map<String, dynamic> updatedFood}) {
+    deleteSingleItem(name: oldName);
+    addSingleItem(updatedFood);
   }
 
   Future<List<Map<String, dynamic>>> getAllItems() async {

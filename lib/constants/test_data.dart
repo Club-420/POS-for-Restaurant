@@ -160,7 +160,7 @@ class TableSchema {
 
   //update customerName
   Future<void> updateCustomerName(
-    {required int index, required String customerName}) async {
+      {required int index, required String customerName}) async {
     db.updateCustomerName(index: index, customerName: customerName);
   }
 }
@@ -180,6 +180,11 @@ class MenuSchema {
     db.deleteSingleItem(name: name);
   }
 
+  void updateFoodItem(
+      {required String oldName, required Map<String, dynamic> updatedFood}) {
+    db.updateSingleItem(oldName: oldName, updatedFood: updatedFood);
+  }
+
   void addSingleItem({required name, required price, required category}) {
     double price_ = double.parse(price);
     if (!_checkContents(name) && price_ > 0) {
@@ -196,7 +201,7 @@ class MenuSchema {
     return false;
   }
 
-  void populateMenu() async {
+  Future<void> populateMenu() async {
     final List<Map<String, dynamic>> tempMenu = await db.getAllItems();
     menu.clear();
     for (final item in tempMenu) {
