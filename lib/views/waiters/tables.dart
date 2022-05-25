@@ -12,14 +12,13 @@ var itemnameController = TextEditingController();
 var priceController = TextEditingController();
 
 class TableView extends StatefulWidget {
-  const TableView({Key? key}) : super(key: key);
-
+  TableView({Key? key, this.currentPage = 0}) : super(key: key);
+  int currentPage;
   @override
   State<TableView> createState() => _TableViewState();
 }
 
 class _TableViewState extends State<TableView> {
-  int _selectedIndex = 0;
 //generate list of popupmenu item
   List<PopupMenuEntry> listOfNotification() {
     final List<PopupMenuEntry> _list = [];
@@ -32,9 +31,6 @@ class _TableViewState extends State<TableView> {
       _list.add(_temp);
       _list.add(const PopupMenuDivider());
     }
-
-    _list.removeLast();
-
     return _list;
   }
 
@@ -48,7 +44,7 @@ class _TableViewState extends State<TableView> {
     pages.add(settingWidget(context));
 
     return Scaffold(
-      floatingActionButton: _selectedIndex == 1
+      floatingActionButton: widget.currentPage == 1
           ? FloatingActionButton(
               child: Icon(Icons.add),
               onPressed: () {
@@ -88,13 +84,22 @@ class _TableViewState extends State<TableView> {
                               var price = priceController.text;
 
                               if (itemname != '' && price != '') {
-                                setState(() {
-                                  menu.addSingleItem(
-                                      name: itemname,
-                                      price: price,
-                                      category: dropdownvalue);
-                                });
-                                Navigator.pop(context);
+                                menu.addSingleItem(
+                                    name: itemname,
+                                    price: price,
+                                    category: dropdownvalue);
+                                Navigator.pushReplacement(
+                                  context,
+                                  PageRouteBuilder(
+                                    pageBuilder:
+                                        (context, animation1, animation2) =>
+                                            TableView(
+                                      currentPage: 1,
+                                    ),
+                                    transitionDuration: Duration.zero,
+                                    reverseTransitionDuration: Duration.zero,
+                                  ),
+                                );
                               }
                             },
                             child: const Text('Save'),
@@ -106,7 +111,7 @@ class _TableViewState extends State<TableView> {
             )
           : null,
       appBar: AppBar(
-        title: Text(navbar[_selectedIndex]),
+        title: Text(navbar[widget.currentPage]),
         centerTitle: true,
         backgroundColor: Color.fromARGB(255, 49, 105, 131),
         leading: IconButton(
@@ -133,7 +138,7 @@ class _TableViewState extends State<TableView> {
         ],
       ),
       body: Container(
-        child: pages.elementAt(_selectedIndex),
+        child: pages.elementAt(widget.currentPage),
       ),
       // resizeToAvoidBottomInset: false,
       bottomNavigationBar: BottomNavigationBar(
@@ -171,10 +176,10 @@ class _TableViewState extends State<TableView> {
         //  backgroundColor: Colors.green,
         selectedItemColor: Colors.teal,
         unselectedItemColor: Colors.grey,
-        currentIndex: _selectedIndex,
+        currentIndex: widget.currentPage,
         onTap: (item) {
           setState(() {
-            _selectedIndex = item;
+            widget.currentPage = item;
           });
         },
       ),
@@ -236,11 +241,10 @@ Future<bool> showCheckoutDialog(BuildContext context, {required index}) {
                 await tableSchema.clear(index: index);
                 tableSchema.fetchAllTables().then((value) {
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                  tableRoute,
-                  (route) => false,
-                );
+                    tableRoute,
+                    (route) => false,
+                  );
                 });
-                
               },
               child: const Text("Yes"))
         ],

@@ -12,93 +12,96 @@ class menuWidget extends StatefulWidget {
 class _menuWidgetState extends State<menuWidget> {
   @override
   Widget build(BuildContext context) {
-    menu.populateMenu();
-    return Container(
-      child: GridView.builder(
-          itemCount: menu.menu.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 5,
-          ),
-          itemBuilder: (context, index) {
-            return Container(
-              margin: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: Colors.white,
-                border: Border.all(color: Colors.grey, width: 1.5),
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) => EditMenu(
-                                    index: index,
-                                  ));
-                        },
-                        icon: const Icon(
-                          Icons.edit,
-                          color: Colors.teal,
-                          size: 20,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) => DeleteMenu(
-                                    index: index,
-                                  ));
-                        },
-                        icon: const Icon(
-                          Icons.delete,
-                          color: Colors.teal,
-                          size: 20,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const FittedBox(
-                    child: Image(
-                      alignment: Alignment.center,
-                      width: 80,
-                      height: 80,
-                      image: AssetImage(
-                        'asset/images/loginView_logo.png',
-                      ),
+    return FutureBuilder(
+        future: menu.populateMenu(),
+        builder: (context, snapshot) {
+          return Container(
+            child: GridView.builder(
+                itemCount: menu.menu.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 5,
+                ),
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.white,
+                      border: Border.all(color: Colors.grey, width: 1.5),
                     ),
-                  ),
-                  FittedBox(
                     child: Column(
                       children: [
-                        Text(
-                          '   ${menu.menu[index]['name']}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.teal,
-                            fontSize: 15,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => EditMenu(
+                                          index: index,
+                                        ));
+                              },
+                              icon: const Icon(
+                                Icons.edit,
+                                color: Colors.teal,
+                                size: 20,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => DeleteMenu(
+                                          index: index,
+                                        ));
+                              },
+                              icon: const Icon(
+                                Icons.delete,
+                                color: Colors.teal,
+                                size: 20,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const FittedBox(
+                          child: Image(
+                            alignment: Alignment.center,
+                            width: 80,
+                            height: 80,
+                            image: AssetImage(
+                              'asset/images/loginView_logo.png',
+                            ),
                           ),
                         ),
-                        Text(
-                          'Rs ${menu.menu[index]['price']}        \n',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.teal,
-                            fontSize: 15,
+                        FittedBox(
+                          child: Column(
+                            children: [
+                              Text(
+                                '   ${menu.menu[index]['name']}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.teal,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Text(
+                                'Rs ${menu.menu[index]['price']}        \n',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.teal,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
+                        )
                       ],
                     ),
-                  )
-                ],
-              ),
-            );
-          }),
-    );
+                  );
+                }),
+          );
+        });
   }
 }
 
@@ -174,11 +177,19 @@ class _DeleteMenuState extends State<DeleteMenu> {
                   ),
                   IconButton(
                     onPressed: () {
-                      setState(() {
-                        MenuSchema()
-                            .deleteSingleItem(name: tempMenuItem['name']);
-                      });
-                      Navigator.pop(context);
+                      MenuSchema().deleteSingleItem(name: tempMenuItem['name']);
+
+                      Navigator.pushReplacement(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) =>
+                              TableView(
+                            currentPage: 1,
+                          ),
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        ),
+                      );
                     },
                     icon: const Icon(
                       Icons.check,
@@ -312,21 +323,33 @@ class _EditMenuState extends State<EditMenu> {
                   ),
                   IconButton(
                     onPressed: () {
-                      setState(() {
-                        menu.addSingleItem(
-                            name: _itemname.text,
-                            price: _itemprice.text,
-                            category: dropdownvalue);
-                        _itemname.clear();
-                        _itemprice.clear();
-                        dropdownvalue = 'Veg';
-                        // menu.updateByMap(
-                        //   index: widget.index,
-                        //   map: tempMenuItem,
-                        // );
-                      });
-                      Navigator.pop(context);
-                    },
+                      // menu.updateFoodItem(oldName:menu.menu[7]['name'],updatedFood:{
+                      //   'name':_itemname,
+                      //   'price':_itemprice,
+                      //   'category':dropdownvalue
+                      // } );
+                      MenuSchema().deleteSingleItem(name: tempMenuItem['name']);
+
+                      menu.addSingleItem(
+                          name: _itemname.text,
+                          price: _itemprice.text,
+                          category: dropdownvalue);
+                      _itemname.clear();
+                      _itemprice.clear();
+                      dropdownvalue = 'Veg';
+                      Navigator.pushReplacement(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) =>
+                              TableView(
+                            currentPage: 1,
+                          ),
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        ),
+                      );
+                      // );
+},
                     icon: const Icon(
                       Icons.check,
                       color: Colors.green,

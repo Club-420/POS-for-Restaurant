@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
         waiterRoute: (context) => const WorkersView(),
         kitchenRoute: (context) => const KitchenView(),
         adminRoute: (context) => const AdminView(),
-        tableRoute: (context) => const TableView(),
+        tableRoute: (context) =>  TableView(),
       },
     );
   }
