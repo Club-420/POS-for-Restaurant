@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pos/constants/test_data.dart';
-
+import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 // ignore: camel_case_types
 class billwidget extends StatefulWidget {
   const billwidget({Key? key}) : super(key: key);
@@ -11,6 +11,9 @@ class billwidget extends StatefulWidget {
 
 // ignore: camel_case_types
 class _billwidgetState extends State<billwidget> {
+
+
+  
   int indexes = 0;
   @override
   Widget build(BuildContext context) {
@@ -51,12 +54,12 @@ class _billwidgetState extends State<billwidget> {
             margin: EdgeInsets.all(10),
             color: Colors.grey,
             child: ListView.builder(
-                itemCount:TableSchema(index: indexes).foods.length,
+                itemCount: tableSchema.foods.length,
                 itemBuilder: (context, index) {
                   return Container(
                     
                     
-                    child: Text('${TableSchema(index: indexes).foods[index]}')
+                    child: Text('${tableSchema.foods[indexes]}')
                   );
                 }),
           ),
