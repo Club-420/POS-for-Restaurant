@@ -21,6 +21,14 @@ class TableSchema {
 //database
   TableDB db = TableDB();
 
+  Future<void> getSingleTable({required int index}) async {
+    Map<String, dynamic> singleTable = await db.getSingleTable(index: index);
+
+    //add single table
+    tables[index] = singleTable;
+    print(singleTable);
+  }
+
   Future<void> fetchAllTables() async {
     final List<Map<String, dynamic>> tempMenu = await db.getAllTables();
     tables.clear();
@@ -32,10 +40,10 @@ class TableSchema {
     tables.sort((a, b) => (a['index']).compareTo(b['index']));
   }
 
-  Future<void> fetchSingleTable({required int index}) async {
-    final temp = await db.getSingleTable(index: index);
-    tables[index] = temp;
-  }
+  // Future<void> fetchSingleTable({required int index}) async {
+  //   final temp = await db.getSingleTable(index: index);
+  //   tables[index] = temp;
+  // }
 
   void updateSingleTable(
       {required int index, required Map<String, dynamic> tableData}) {
@@ -217,6 +225,10 @@ class MenuSchema {
       menu[index]['price'] = price;
     }
     return;
+  }
+
+  void deleteSingleItem({required name}) {
+    db.deleteSingleItem(name: name);
   }
 
   void clean() {

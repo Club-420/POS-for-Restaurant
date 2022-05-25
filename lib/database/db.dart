@@ -8,10 +8,21 @@ Map<String, dynamic> tableModel = {
 };
 
 class TableDB {
-  void updateSingleTable(
-      {required int index, required Map<String, dynamic> tableData}) {
+  Future<void> updateSingleTable(
+      {required int index, required Map<String, dynamic> tableData}) async {
     final db = FirebaseFirestore.instance;
-    db.collection('tables').doc('table $index').set(tableData);
+    await db.collection('tables').doc('table $index').set(tableData);
+  }
+
+  Future<void> addSingleItem(
+      {required int index, required String foodName, required int no}) async {
+    final db = FirebaseFirestore.instance;
+
+    Map<String, dynamic> foods = await getSingleTable(index: index);
+    // foods['foods']['name'] = foodName;
+    // foods['foods']['noOfItems'] = foodName;
+
+    await db.collection('tables').doc('table $index').update({'foods': foods['foods']});
   }
 
   void updateStatusOfTable({required int index, required bool status}) {

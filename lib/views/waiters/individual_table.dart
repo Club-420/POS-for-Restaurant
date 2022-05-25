@@ -19,9 +19,9 @@ class _IndividualTableState extends State<IndividualTable> {
   Widget build(BuildContext context) {
     bool checked = tableSchema.isOccupied(index: widget.index);
     return FutureBuilder(
-      future: tableSchema.fetchSingleTable(index: widget.index),
+      future: tableSchema.getSingleTable(index: widget.index),
       builder: (context, snapshot) {
-        // print('${tableSchema.tables[widget.index]}');
+        print('${tableSchema.tables[widget.index]}');
         return Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
@@ -172,13 +172,15 @@ class _IndividualTableState extends State<IndividualTable> {
                                 ],
                               ),
                               onTap: () {
+                                
                                 //first check if the table is occupied
-                                //   if (tableSchema.tables[widget.index].isOccupied) {
-                                //   setState(() {
-                                //                                 tableSchema.tables[widget.index]
-                                //         .add(menu.menu[index]['name'], 1);
-                                //   });
-                                // }
+                                  if (tableSchema.tables[widget.index].isOccupied) {
+                                  setState(() {
+                                    // tableSchema.updateSingleTable(index: widget.index, tableData: )
+                                        tableSchema.tables[widget.index]
+                                        .add(menu.menu[index]['name'], 1);
+                                  });
+                                }
                               },
                             ),
                           );
