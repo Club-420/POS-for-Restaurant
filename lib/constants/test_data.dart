@@ -29,6 +29,11 @@ class TableSchema {
     print(singleTable);
   }
 
+  Future<void> removeSingleItem(
+      {required int index, required String itemName}) async {
+    db.removeSingleItem(index: index, itemName: itemName);
+  }
+
   Future<void> fetchAllTables() async {
     final List<Map<String, dynamic>> tempMenu = await db.getAllTables();
     tables.clear();
@@ -39,11 +44,6 @@ class TableSchema {
     //sort the tables according to index
     tables.sort((a, b) => (a['index']).compareTo(b['index']));
   }
-
-  // Future<void> fetchSingleTable({required int index}) async {
-  //   final temp = await db.getSingleTable(index: index);
-  //   tables[index] = temp;
-  // }
 
   void updateSingleTable(
       {required int index, required Map<String, dynamic> tableData}) {
@@ -127,24 +127,31 @@ class TableSchema {
     }
   }
 
-  void add(String food, int quantity) {
-    int pos = contains(food);
-    if (pos != -1) {
-      int prev = foods[pos]['noOfItem'] as int;
-      foods[pos]['noOfItem'] = quantity + prev;
-    } else {
-      foods.add({
-        'name': food,
-        'noOfItem': quantity,
-      });
-    }
+//add food item to the list
+  void add(
+      {required int index,
+      required double itemPrice,
+      required String foodName}) async {
+    db.addSingleItem(
+        index: index, itemPrice: itemPrice, foodName: foodName, noOfItem: 1);
+
+    // int pos = contains(food);
+    // if (pos != -1) {
+    //   int prev = foods[pos]['noOfItem'] as int;
+    //   foods[pos]['noOfItem'] = quantity + prev;
+    // } else {
+    //   foods.add({
+    //     'name': food,
+    //     'noOfItem': quantity,
+    // });
+    // }
   }
 
-  void addFoodList(List<Map<String, Object>> foodList) {
-    for (final i in foodList) {
-      add(i['name'] as String, i['noOfItem'] as int);
-    }
-  }
+  // void addFoodList(List<Map<String, Object>> foodList) {
+  //   for (final i in foodList) {
+  //     add(i['name'] as String, i['noOfItem'] as int);
+  //   }
+  // }
 
   void remove(String food, int quantity) {
     int pos = contains(food);

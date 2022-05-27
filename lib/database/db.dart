@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:pos/auth/firebase_auth_provider.dart';
 
 Map<String, dynamic> tableModel = {
   'index': 0,
   'name': '',
   'isOccupied': false,
-  'foods': [{}],
 };
 
 class TableDB {
@@ -15,18 +13,53 @@ class TableDB {
     await db.collection('tables').doc('table $index').set(tableData);
   }
 
-  Future<void> addSingleItem(
-      {required int index, required String foodName, required int no}) async {
+  Future<void> removeSingleItem(
+      {required int index, required String itemName}) async {
     final db = FirebaseFirestore.instance;
-
-    Map<String, dynamic> foods = await getSingleTable(index: index);
-    // foods['foods']['name'] = foodName;
-    // foods['foods']['noOfItems'] = foodName;
-
     await db
         .collection('tables')
         .doc('table $index')
-        .update({'foods': foods['foods']});
+        .collection('foodsColl $index')
+        .doc(itemName)
+        .delete();
+  }
+
+  Future<void> addSingleItem(
+      {required int index,
+      required double itemPrice,
+      required String foodName,
+      required int noOfItem}) async {
+    final db = FirebaseFirestore.instance;
+
+    db
+        .collection('tables')
+        .doc('table $index')
+        .collection('foodsColl $index')
+        .doc(foodName)
+        .get()
+        .then((value) {
+      if (value.exists) {
+        db
+            .collection('tables')
+            .doc('table $index')
+            .collection('foodsColl $index')
+            .doc(foodName)
+            .update({
+          'noOfItem': FieldValue.increment(1),
+          'price': FieldValue.increment(itemPrice)
+        });
+      } else {
+        db
+            .collection('tables')
+            .doc('table $index')
+            .collection('foodsColl $index')
+            .doc(foodName)
+            .set({
+          'noOfItem': 1,
+          'price': itemPrice,
+        });
+      }
+    });
   }
 
   void updateStatusOfTable({required int index, required bool status}) {
@@ -35,11 +68,31 @@ class TableDB {
   }
 
   Future<void> cleanSingleTable({required int index}) async {
+    final db = FirebaseFirestore.instance;
     await updateSingleTable(index: index, tableData: {
       'index': index,
       'name': '',
       'isOccupied': false,
-      'foods': [{}],
+    });
+
+    await db
+        .collection('tables')
+        .doc('table $index')
+        .collection('foodsColl $index')
+        .get()
+        .then((doc) {
+      for (final item in doc.docs) {
+        item.reference.delete();
+      }
+    });
+
+    await db
+        .collection('tables')
+        .doc('table $index')
+        .collection('foodsColl $index')
+        .doc('test')
+        .set({
+      'test': 0,
     });
   }
 
@@ -63,7 +116,15 @@ class TableDB {
         'index': i,
         'name': '',
         'isOccupied': false,
-        'foods': [{}],
+      });
+
+      db
+          .collection('tables')
+          .doc('table $i')
+          .collection('foodsColl $i')
+          .doc('test')
+          .set({
+        'test': 0,
       });
     }
   }
@@ -76,6 +137,7 @@ class TableDB {
         tempList.add(doc.data());
       }
     });
+
     return tempList;
   }
 

@@ -323,11 +323,6 @@ class _EditMenuState extends State<EditMenu> {
                   ),
                   IconButton(
                     onPressed: () {
-                      // menu.updateFoodItem(oldName:menu.menu[7]['name'],updatedFood:{
-                      //   'name':_itemname,
-                      //   'price':_itemprice,
-                      //   'category':dropdownvalue
-                      // } );
                       MenuSchema().deleteSingleItem(name: tempMenuItem['name']);
 
                       menu.addSingleItem(
@@ -349,7 +344,7 @@ class _EditMenuState extends State<EditMenu> {
                         ),
                       );
                       // );
-},
+                    },
                     icon: const Icon(
                       Icons.check,
                       color: Colors.green,
