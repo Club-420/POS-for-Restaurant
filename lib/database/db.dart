@@ -19,7 +19,7 @@ class TableDB {
     await db
         .collection('tables')
         .doc('table $index')
-        .collection('foodsColl $index')
+        .collection('foodsColl')
         .doc(itemName)
         .delete();
   }
@@ -34,7 +34,7 @@ class TableDB {
     db
         .collection('tables')
         .doc('table $index')
-        .collection('foodsColl $index')
+        .collection('foodsColl')
         .doc(foodName)
         .get()
         .then((value) {
@@ -42,21 +42,25 @@ class TableDB {
         db
             .collection('tables')
             .doc('table $index')
-            .collection('foodsColl $index')
+            .collection('foodsColl')
             .doc(foodName)
             .update({
           'noOfItem': FieldValue.increment(1),
-          'price': FieldValue.increment(itemPrice)
+          'price': FieldValue.increment(itemPrice),
+          'isCooked': false,
         });
       } else {
         db
             .collection('tables')
             .doc('table $index')
-            .collection('foodsColl $index')
+            .collection('foodsColl')
             .doc(foodName)
             .set({
           'noOfItem': 1,
           'price': itemPrice,
+          'isCooked': false,
+          'index': index,
+          'noOfItemsCooked': 0
         });
       }
     });
@@ -78,7 +82,7 @@ class TableDB {
     await db
         .collection('tables')
         .doc('table $index')
-        .collection('foodsColl $index')
+        .collection('foodsColl')
         .get()
         .then((doc) {
       for (final item in doc.docs) {
@@ -89,10 +93,14 @@ class TableDB {
     await db
         .collection('tables')
         .doc('table $index')
-        .collection('foodsColl $index')
+        .collection('foodsColl')
         .doc('test')
         .set({
-      'test': 0,
+      'index': index,
+      'isCooked': false,
+      'noOfItem': 0,
+      'noOfItemsCooked': 0,
+      'price': 0,
     });
   }
 
@@ -121,10 +129,14 @@ class TableDB {
       db
           .collection('tables')
           .doc('table $i')
-          .collection('foodsColl $i')
+          .collection('foodsColl')
           .doc('test')
           .set({
-        'test': 0,
+        'isCooked': false,
+        'index': i,
+        'noOfItemsCooked': 0,
+        'noOfItem': 0,
+        'price': 0,
       });
     }
   }

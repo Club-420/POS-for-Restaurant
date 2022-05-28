@@ -18,8 +18,10 @@ void main() {
   
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
-    DeviceOrientation.landscapeLeft,
-    DeviceOrientation.landscapeRight,
+    // DeviceOrientation.landscapeLeft,
+    // DeviceOrientation.landscapeRight,
+    DeviceOrientation.portraitDown,
+    DeviceOrientation.portraitUp,
   ]).then((value) => runApp(const MyApp()));
   runApp(const MyApp());
 }

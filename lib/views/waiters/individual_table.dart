@@ -274,7 +274,7 @@ class _IndividualTableState extends State<IndividualTable> {
                                 stream: FirebaseFirestore.instance
                                     .collection('tables')
                                     .doc('table ${widget.index}')
-                                    .collection('foodsColl ${widget.index}')
+                                    .collection('foodsColl')
                                     .snapshots(),
                                 builder: (context, snapshot) {
                                   return ListView.builder(

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pos/database/db.dart';
 
 final notifications = ['Notifications'];
@@ -8,6 +9,7 @@ String dropdownvalue = 'Veg';
 // List tables = [];
 MenuSchema menu = MenuSchema();
 TableSchema tableSchema = TableSchema();
+// KitchenSchema kitchenSchema = KitchenSchema();
 
 class TableSchema {
   List tables = [];
@@ -26,7 +28,6 @@ class TableSchema {
 
     //add single table
     tables[index] = singleTable;
-    print(singleTable);
   }
 
   Future<void> removeSingleItem(
@@ -257,3 +258,29 @@ class MenuSchema {
     updateByIndex(index: index, name: map['name'], price: map['price']);
   }
 }
+
+// class KitchenSchema {
+//   String timestamp = '';
+//   int tableno = 0;
+//   Map Items = {
+//     'name': '',
+//     'quantity': 0,
+//   };
+//   bool cooked = false;
+
+//   Future<void> loadItemForKitchen() async {
+//     final time = Timestamp.now().toDate().toLocal();
+//     final db = FirebaseFirestore.instance.collection('kitchen');
+//     tableSchema.db.getAllTables().then((value) {
+//       value.forEach((element) {
+//         if (element['isOccupied']) {
+//           db.doc(element['index']).set({
+//             'timestamp':time.hour.toString()+':'+time.minute.toString()+':'+time.second.toString(),
+            
+
+//           });
+//         }
+//       });
+//     });
+//   }
+// }
