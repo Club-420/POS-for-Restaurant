@@ -71,6 +71,8 @@ class _LoginViewState extends State<LoginView> {
             child: TextField(
               controller: _email,
               autocorrect: true,
+              enableSuggestions: true,
+              
               keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),

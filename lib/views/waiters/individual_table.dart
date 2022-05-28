@@ -5,17 +5,21 @@ import 'package:pos/views/waiters/ordermenu.dart';
 import 'package:pos/views/waiters/tables.dart';
 import '../../constants/routes.dart';
 import '../../constants/test_data.dart';
-
 class IndividualTable extends StatefulWidget {
   // ignore: prefer_typing_uninitialized_variables
   final index;
-  const IndividualTable({Key? key, required this.index}) : super(key: key);
+
+  IndividualTable({Key? key, required this.index}) : super(key: key);
 
   @override
   State<IndividualTable> createState() => _IndividualTableState();
 }
 
 class _IndividualTableState extends State<IndividualTable> {
+  num totalBill = 0;
+  num itemcount = 0;
+int indexess=0;
+
   @override
   Widget build(BuildContext context) {
     bool checked = tableSchema.isOccupied(index: widget.index);
@@ -78,11 +82,11 @@ class _IndividualTableState extends State<IndividualTable> {
                             });
                           },
                           decoration: InputDecoration(
-                            border: OutlineInputBorder(),
+                            border: const OutlineInputBorder(),
                             hintText: tableSchema.tables[widget.index]
                                     ['name'] ??
                                 'Enter Customer Name',
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                               fontSize: 20,
                             ),
                           ),
@@ -277,9 +281,13 @@ class _IndividualTableState extends State<IndividualTable> {
                                     .collection('foodsColl')
                                     .snapshots(),
                                 builder: (context, snapshot) {
+                                  totalBill = 0;
                                   return ListView.builder(
                                     itemCount: snapshot.data?.docs.length,
                                     itemBuilder: (context, index) {
+                                      totalBill = totalBill +
+                                          snapshot.data?.docs[index]['price']!;
+
                                       if (snapshot.data?.docs[index].id ==
                                           'test') {
                                         return Container();
@@ -453,6 +461,25 @@ class _IndividualTableState extends State<IndividualTable> {
                         child: Container(
                           height: 50,
                           color: Colors.teal,
+                          child: ListView.builder(
+                              itemCount: Categories.length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: ((context, index) {
+                                
+                                return InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      
+                                    indexess = index;
+                                    });
+                                  },
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width/4,
+                                      color: index==indexess? Colors.white:Colors.teal,
+                                      margin: EdgeInsets.fromLTRB(5, 0, 8, 5),
+                                      child: Text('${Categories[index]}')),
+                                );
+                              })),
                         ),
                       ),
                       Flexible(
@@ -488,7 +515,7 @@ class _IndividualTableState extends State<IndividualTable> {
                             Flexible(
                               flex: 2,
                               child: Text(
-                                'Total: ',
+                                'Total: $totalBill',
                                 style: TextStyle(
                                   fontSize:
                                       MediaQuery.of(context).size.width > 550
@@ -509,5 +536,43 @@ class _IndividualTableState extends State<IndividualTable> {
         );
       },
     );
+  }
+
+  Future<bool> showCheckoutDialog(BuildContext context, {required index}) {
+    return showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text(
+            'Checkout',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: const Text('Are you sure the customer wants to Checkout?'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+                child: const Text("Cancel")),
+            TextButton(
+                onPressed: () async {
+                  totalBill = 0;
+                  //clear the table
+                  tableSchema.clear(index: index);
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    tableRoute,
+                    (route) => false,
+                  );
+                  // tableSchema.fetchAllTables().then((value) {
+
+                  // });
+                },
+                child: const Text("Yes"))
+          ],
+        );
+      },
+    ).then((value) => false);
   }
 }

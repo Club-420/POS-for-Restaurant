@@ -4,7 +4,7 @@ import 'package:pos/database/db.dart';
 final notifications = ['Notifications'];
 
 const noOfTables = 20;
-List<String> Categories = ['Veg', 'Non-Veg', 'Drinks'];
+List<String> Categories = ['All','Veg', 'Non-Veg', 'Drinks','Snacks','Breakfast'];
 String dropdownvalue = 'Veg';
 // List tables = [];
 MenuSchema menu = MenuSchema();
