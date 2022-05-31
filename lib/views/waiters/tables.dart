@@ -29,8 +29,9 @@ class _TableViewState extends State<TableView> {
         child: Text(item),
       );
       _list.add(_temp);
-      _list.add(const PopupMenuDivider());
+      // _list.add(const PopupMenuDivider());
     }
+  
     return _list;
   }
 
@@ -115,7 +116,7 @@ class _TableViewState extends State<TableView> {
         centerTitle: true,
         backgroundColor: Color.fromARGB(255, 49, 105, 131),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context)
                 .pushNamedAndRemoveUntil(waiterRoute, (route) => false);
@@ -126,7 +127,7 @@ class _TableViewState extends State<TableView> {
             icon: Icon(
               notifications.isEmpty
                   ? Icons.notifications_outlined
-                  : Icons.notifications_active_outlined,
+                  : Icons.notifications_active,
             ),
             onSelected: (value) async {
               await showNotificationDialog(context, value.toString());

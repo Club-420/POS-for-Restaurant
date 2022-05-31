@@ -515,6 +515,7 @@ int indexess=0;
                             Flexible(
                               flex: 2,
                               child: Text(
+                                
                                 'Total: $totalBill',
                                 style: TextStyle(
                                   fontSize:
