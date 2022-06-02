@@ -22,6 +22,7 @@ class _WorkersViewState extends State<WorkersView> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        backgroundColor: cols,
         title: const Text("Home"),
         actions: [
           PopupMenuButton<MenuAction>(
@@ -68,11 +69,11 @@ class _WorkersViewState extends State<WorkersView> {
                 margin: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: Colors.teal,
-                    boxShadow: const [
+                    color: cols,
+                    boxShadow:  [
                       BoxShadow(
-                        color: Colors.teal,
-                        offset: Offset(0, 1),
+                        color: cols,
+                        offset:const Offset(0, 1),
                         blurRadius: 6,
                       ),
                     ]),
@@ -111,11 +112,11 @@ class _WorkersViewState extends State<WorkersView> {
                 margin: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: Colors.teal,
-                    boxShadow: const [
+                    color: cols,
+                    boxShadow:  [
                       BoxShadow(
-                        color: Colors.teal,
-                        offset: Offset(0, 1),
+                        color: cols,
+                        offset:const Offset(0, 1),
                         blurRadius: 6,
                       )
                     ]),

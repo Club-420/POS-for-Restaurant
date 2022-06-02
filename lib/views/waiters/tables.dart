@@ -12,13 +12,17 @@ var itemnameController = TextEditingController();
 var priceController = TextEditingController();
 
 class TableView extends StatefulWidget {
-  TableView({Key? key, this.currentPage = 0}) : super(key: key);
+  TableView({Key? key, this.currentPage = 0, required this.buildParent})
+      : super(key: key);
   int currentPage;
+  final Function() buildParent;
   @override
-  State<TableView> createState() => _TableViewState();
+  State<TableView> createState() => _TableViewState(buildParent);
 }
 
 class _TableViewState extends State<TableView> {
+  _TableViewState(this.buildParent);
+  final Function() buildParent;
 //generate list of popupmenu item
   List<PopupMenuEntry> listOfNotification() {
     final List<PopupMenuEntry> _list = [];
@@ -39,15 +43,19 @@ class _TableViewState extends State<TableView> {
   Widget build(BuildContext context) {
     List navbar = ['Home', 'Menu', 'Bill', 'Settings'];
     pages.add(tableWidget(context));
-    pages.add(const menuWidget());
+    pages.add(menuWidget(
+      buildParent: buildParent,
+    ));
     pages.add(const billwidget());
-    pages.add(settingWidget(context));
+    pages.add(settingWidget(buildParent: buildParent));
 
     return Scaffold(
       floatingActionButton: widget.currentPage == 1
           ? FloatingActionButton(
+              backgroundColor: cols,
               child: Icon(Icons.add),
               onPressed: () {
+                widget.buildParent();
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -95,6 +103,7 @@ class _TableViewState extends State<TableView> {
                                         (context, animation1, animation2) =>
                                             TableView(
                                       currentPage: 1,
+                                      buildParent: buildParent,
                                     ),
                                     transitionDuration: Duration.zero,
                                     reverseTransitionDuration: Duration.zero,
@@ -113,7 +122,7 @@ class _TableViewState extends State<TableView> {
       appBar: AppBar(
         title: Text(navbar[widget.currentPage]),
         centerTitle: true,
-        backgroundColor: Color.fromARGB(255, 49, 105, 131),
+        backgroundColor: cols,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
@@ -142,25 +151,25 @@ class _TableViewState extends State<TableView> {
       ),
       // resizeToAvoidBottomInset: false,
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home_max_outlined,
-              color: Colors.teal,
+              color: cols,
             ),
             label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.menu_book_outlined,
-              color: Colors.teal,
+              color: cols,
             ),
             label: 'Menus',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.money_outlined,
-              color: Colors.teal,
+              color: cols,
             ),
             label: 'Bill',
           ),
@@ -168,14 +177,14 @@ class _TableViewState extends State<TableView> {
             backgroundColor: Colors.white,
             icon: Icon(
               Icons.settings_outlined,
-              color: Colors.teal,
+              color: cols,
             ),
             label: 'Settings',
           )
         ],
         //  backgroundColor: Colors.green,
-        selectedItemColor: Colors.teal,
-        unselectedItemColor: Colors.grey,
+        selectedItemColor: Colors.black12,
+        unselectedItemColor: Colors.red,
         currentIndex: widget.currentPage,
         onTap: (item) {
           setState(() {
@@ -275,7 +284,7 @@ Widget tableWidget(BuildContext context) {
               borderRadius: const BorderRadius.all(Radius.circular(7)),
               color: tableSchema.isOccupied(index: index)
                   ? const Color.fromARGB(255, 0, 0, 0)
-                  : Colors.teal,
+                  : cols,
             ),
             child: TextButton(
               onPressed: () {

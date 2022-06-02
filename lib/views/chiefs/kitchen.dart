@@ -18,6 +18,7 @@ class _KitchenViewState extends State<KitchenView> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: cols,
         title: const Text('Kitchen'),
       ),
       body: StreamBuilder<QuerySnapshot>(

@@ -18,7 +18,7 @@ class _OrderMenuState extends State<OrderMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: cols,
       resizeToAvoidBottomInset: false,
       body: Container(
         width: double.infinity,

@@ -157,7 +157,7 @@ class _IndividualTableState extends State<IndividualTable> {
                                                                 500
                                                             ? 20
                                                             : 10,
-                                                    color: Colors.teal,
+                                                    color: cols,
                                                   ),
                                                 ),
                                                 Text(
@@ -170,7 +170,7 @@ class _IndividualTableState extends State<IndividualTable> {
                                                                 500
                                                             ? 20
                                                             : 10,
-                                                    color: Colors.teal,
+                                                    color: cols,
                                                   ),
                                                 ),
                                               ],
@@ -358,7 +358,7 @@ class _IndividualTableState extends State<IndividualTable> {
                                                         '${snapshot.data?.docs[index].id}',
                                                         // '${tableSchema.tables[widget.index].foods[index]['name']}',
                                                         style: TextStyle(
-                                                          color: Colors.teal,
+                                                          color: cols,
                                                           fontSize: MediaQuery.of(
                                                                           context)
                                                                       .size
@@ -382,7 +382,7 @@ class _IndividualTableState extends State<IndividualTable> {
                                                         '${snapshot.data?.docs[index]['noOfItem']}',
                                                         // '   ${tableSchema.tables[widget.index].howMuch(tableSchema.tables[widget.index].foods[index]['name'])}',
                                                         style: TextStyle(
-                                                          color: Colors.teal,
+                                                          color: cols,
                                                           fontSize: MediaQuery.of(
                                                                           context)
                                                                       .size
@@ -407,7 +407,7 @@ class _IndividualTableState extends State<IndividualTable> {
                                                         '${snapshot.data?.docs[index]['price']}',
                                                         // '  ${tableSchema.tables[widget.index].getItemTotalPrice(foodName: tableSchema.tables[widget.index].foods[index]['name'])}',
                                                         style: TextStyle(
-                                                          color: Colors.teal,
+                                                          color: cols,
                                                           fontSize: MediaQuery.of(
                                                                           context)
                                                                       .size
@@ -452,7 +452,7 @@ class _IndividualTableState extends State<IndividualTable> {
                         flex: 2,
                         child: Container(
                           height: 50,
-                          color: Colors.teal,
+                          color: cols,
                         ),
                       ),
                       Flexible(

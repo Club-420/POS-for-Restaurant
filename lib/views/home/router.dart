@@ -1,6 +1,7 @@
 //we will just route the user to specific pages
 import 'package:flutter/material.dart';
 import 'package:pos/constants/routes.dart';
+import 'package:pos/constants/test_data.dart';
 
 class RouteView extends StatefulWidget {
   const RouteView({Key? key}) : super(key: key);
@@ -66,7 +67,7 @@ class _RouteViewState extends State<RouteView> {
                     Colors.white,
                   ),
                   backgroundColor: MaterialStateProperty.all<Color>(
-                      const Color.fromARGB(255, 0, 140, 150)),
+                      cols),
                   shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50),
@@ -93,7 +94,7 @@ class _RouteViewState extends State<RouteView> {
                     Colors.white,
                   ),
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.teal),
+                      MaterialStateProperty.all<Color>(cols),
                   shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50),

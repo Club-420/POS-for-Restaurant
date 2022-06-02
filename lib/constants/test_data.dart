@@ -1,7 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:pos/database/db.dart';
 
 final notifications = ['Notifications'];
+
+Color cols = Color.fromARGB(255, 0, 124, 106);
+MaterialColor materialCols = Colors.blueGrey;
 
 const noOfTables = 20;
 List<String> Categories = ['Veg', 'Non-Veg', 'Drinks'];
