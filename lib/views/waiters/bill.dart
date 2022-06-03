@@ -1,8 +1,5 @@
-
-
 import 'package:flutter/material.dart';
-
-
+import 'package:pos/views/admin/notifications.dart';
 
 class Pdfview extends StatefulWidget {
   const Pdfview({Key? key}) : super(key: key);
@@ -14,15 +11,13 @@ class Pdfview extends StatefulWidget {
 class _PdfviewState extends State<Pdfview> {
   @override
   Widget build(BuildContext context) {
- 
+   
     return Scaffold(
       appBar: AppBar(
         title: Text('Table'),
         centerTitle: true,
       ),
-      body: Container(
-        
-      ),
+      body: Container(),
     );
   }
 }
@@ -52,8 +47,10 @@ class _billwidgetState extends State<billwidget> {
                     return Container(
                       color: index == indexes ? Colors.white : Colors.teal,
                       child: TextButton(
-                        onPressed: () {
+                        onPressed: ()async {
+                           await   NotificationService().showNotification(1, 'd', 'ds');
                           setState(() {
+                         
                             indexes = index;
                           });
                         },

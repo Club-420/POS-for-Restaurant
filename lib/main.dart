@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pos/auth/auth_service.dart';
 import 'package:pos/constants/routes.dart';
 import 'package:pos/constants/test_data.dart';
+import 'package:pos/views/admin/notifications.dart';
 import 'package:pos/views/authtification/verify.dart';
 import 'package:pos/views/chiefs/kitchen.dart';
 import 'package:pos/views/home/workers.dart';
@@ -17,7 +18,7 @@ import 'views/home/router.dart';
 void main() {
   //initialize the menu items category
   menu.allCategory();
-
+  NotificationService().initNotification();
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     // DeviceOrientation.landscapeLeft,

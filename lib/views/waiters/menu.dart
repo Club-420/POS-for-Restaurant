@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pos/constants/test_data.dart';
+import 'package:pos/views/admin/notifications.dart';
 import 'package:pos/views/waiters/tables.dart';
 
 class menuWidget extends StatefulWidget {
@@ -36,6 +37,7 @@ class _menuWidgetState extends State<menuWidget> {
                           children: [
                             IconButton(
                               onPressed: () {
+                               
                                 showDialog(
                                     context: context,
                                     builder: (context) => EditMenu(
@@ -50,6 +52,7 @@ class _menuWidgetState extends State<menuWidget> {
                             ),
                             IconButton(
                               onPressed: () {
+                               
                                 showDialog(
                                     context: context,
                                     builder: (context) => DeleteMenu(
