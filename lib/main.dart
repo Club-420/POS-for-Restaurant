@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pos/auth/auth_service.dart';
 import 'package:pos/constants/routes.dart';
@@ -37,10 +39,20 @@ class HomePage extends StatelessWidget {
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.done:
-            return const RouteView();
+            final users = FirebaseAuth.instance.currentUser;
+            if (users != null) {
+              if (users.emailVerified) {
+                return const WorkersView();
+              } else {
+                return const VerifyView();
+              }
+            } else {
+              return const RouteView();
+            }
+
           default:
             return const Scaffold(
-              body: CircularProgressIndicator(),
+              body: Center(child: CircularProgressIndicator()),
             );
         }
       },

@@ -4,6 +4,7 @@ import 'package:pos/constants/routes.dart';
 import 'package:pos/constants/test_data.dart';
 
 import '../../constants/emums.dart';
+import '../admin/setting.dart';
 
 class WorkersView extends StatefulWidget {
   const WorkersView({Key? key}) : super(key: key);
@@ -30,7 +31,6 @@ class _WorkersViewState extends State<WorkersView> {
               switch (value) {
                 case MenuAction.logout:
                   final result = await showLogOutDialog(context);
-
                   if (result) {
                     await AuthService.firebase().logOut();
                     //send back to login
@@ -40,13 +40,23 @@ class _WorkersViewState extends State<WorkersView> {
                     );
                   }
                   break;
+                  case MenuAction.setting:
+                  Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => SettingAll(),
+                      ),
+                    );
               }
             },
             itemBuilder: (context) {
               return const [
                 PopupMenuItem<MenuAction>(
                   value: MenuAction.logout,
-                  child: Text('log out'),
+                  child: Text('Log Out'),
+                ),
+                PopupMenuItem<MenuAction>(
+                  value: MenuAction.setting,
+                  child: Text('Setting'),
                 ),
               ];
             },

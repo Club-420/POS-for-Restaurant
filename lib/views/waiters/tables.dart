@@ -33,8 +33,9 @@ class _TableViewState extends State<TableView> {
         child: Text(item),
       );
       _list.add(_temp);
-      _list.add(const PopupMenuDivider());
+      // _list.add(const PopupMenuDivider());
     }
+  
     return _list;
   }
 
@@ -124,7 +125,7 @@ class _TableViewState extends State<TableView> {
         centerTitle: true,
         backgroundColor: cols,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context)
                 .pushNamedAndRemoveUntil(waiterRoute, (route) => false);
@@ -135,7 +136,7 @@ class _TableViewState extends State<TableView> {
             icon: Icon(
               notifications.isEmpty
                   ? Icons.notifications_outlined
-                  : Icons.notifications_active_outlined,
+                  : Icons.notifications_active,
             ),
             onSelected: (value) async {
               await showNotificationDialog(context, value.toString());
@@ -226,42 +227,7 @@ Future<bool> showNotificationDialog(BuildContext context, String value) {
       }).then((value) => value ?? false);
 }
 
-Future<bool> showCheckoutDialog(BuildContext context, {required index}) {
-  return showDialog<bool>(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: const Text(
-          'Checkout',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        content: const Text('Are you sure the customer wants to Checkout?'),
-        actions: [
-          TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
-              child: const Text("Cancel")),
-          TextButton(
-              onPressed: () async {
-                //clear the table
-                tableSchema.clear(index: index);
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  tableRoute,
-                  (route) => false,
-                );
-                // tableSchema.fetchAllTables().then((value) {
 
-                // });
-              },
-              child: const Text("Yes"))
-        ],
-      );
-    },
-  ).then((value) => false);
-}
 
 //table widget
 Widget tableWidget(BuildContext context) {

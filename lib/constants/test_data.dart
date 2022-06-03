@@ -3,13 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pos/database/db.dart';
 
-final notifications = ['Notifications'];
+final notifications = ['Notifications','hello'];
+
+final notificationsInKitchen = ['Chicken','Soup'];
 
 Color cols = Color.fromARGB(255, 0, 124, 106);
 MaterialColor materialCols = Colors.blueGrey;
 
 const noOfTables = 20;
-List<String> Categories = ['Veg', 'Non-Veg', 'Drinks'];
+List<String> Categories = ['All','Veg', 'Non-Veg', 'Drinks','Snacks','Breakfast'];
 String dropdownvalue = 'Veg';
 // List tables = [];
 MenuSchema menu = MenuSchema();

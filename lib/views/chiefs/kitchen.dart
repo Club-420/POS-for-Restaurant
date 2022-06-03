@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pos/constants/test_data.dart';
+import 'package:pos/views/waiters/tables.dart';
 
 String clickedFood = '';
 
@@ -15,11 +16,39 @@ class _KitchenViewState extends State<KitchenView> {
   @override
   Widget build(BuildContext context) {
     // kitchenSchema.loadItemForKitchen();
+      List<PopupMenuEntry> listOfNotification() {
+    final List<PopupMenuEntry> _list = [];
+
+    for (final item in notificationsInKitchen) {
+      final _temp = PopupMenuItem(
+        value: item,
+        child: Text(item),
+      );
+      _list.add(_temp);
+      _list.add(const PopupMenuDivider());
+    }
+    return _list;
+  }
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: cols,
         title: const Text('Kitchen'),
+        actions: [
+          PopupMenuButton(
+            icon: Icon(
+              notificationsInKitchen.isEmpty
+                  ? Icons.notifications_outlined
+                  : Icons.notifications_active,
+            ),
+            onSelected: (value) async {
+              await showNotificationDialog(context, value.toString());
+            },
+            itemBuilder: (context) {
+              return listOfNotification();
+            },
+          )
+        ],
       ),
       body: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
@@ -323,3 +352,31 @@ class _KitchenViewState extends State<KitchenView> {
   }
 }
 //
+Future<bool> showNotificationDialog(BuildContext context, String value) {
+  return showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text(
+            "Task Completion",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: Text(value),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+                child: const Text("Cancel")),
+            TextButton(
+                onPressed: () {
+                  notificationsInKitchen.remove(value);
+                  Navigator.of(context).pop(false);
+                },
+                child: const Text("Yes")),
+          ],
+        );
+      }).then((value) => value ?? false);
+}
