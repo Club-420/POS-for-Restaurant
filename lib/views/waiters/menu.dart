@@ -4,13 +4,15 @@ import 'package:pos/views/admin/notifications.dart';
 import 'package:pos/views/waiters/tables.dart';
 
 class menuWidget extends StatefulWidget {
-  const menuWidget({Key? key}) : super(key: key);
-
+  const menuWidget({Key? key, required this.buildParent}) : super(key: key);
+  final Function() buildParent;
   @override
-  State<menuWidget> createState() => _menuWidgetState();
+  State<menuWidget> createState() => _menuWidgetState(buildParent: buildParent);
 }
 
 class _menuWidgetState extends State<menuWidget> {
+  final Function() buildParent;
+  _menuWidgetState({required this.buildParent});
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -41,12 +43,13 @@ class _menuWidgetState extends State<menuWidget> {
                                 showDialog(
                                     context: context,
                                     builder: (context) => EditMenu(
+                                      buildParent: buildParent,
                                           index: index,
                                         ));
                               },
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.edit,
-                                color: Colors.teal,
+                                color: cols,
                                 size: 20,
                               ),
                             ),
@@ -57,11 +60,12 @@ class _menuWidgetState extends State<menuWidget> {
                                     context: context,
                                     builder: (context) => DeleteMenu(
                                           index: index,
+                                          buildParent: buildParent,
                                         ));
                               },
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.delete,
-                                color: Colors.teal,
+                                color: cols,
                                 size: 20,
                               ),
                             ),
@@ -82,17 +86,17 @@ class _menuWidgetState extends State<menuWidget> {
                             children: [
                               Text(
                                 '   ${menu.menu[index]['name']}',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.teal,
+                                  color: cols,
                                   fontSize: 15,
                                 ),
                               ),
                               Text(
                                 'Rs ${menu.menu[index]['price']}        \n',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.teal,
+                                  color: cols,
                                   fontSize: 15,
                                 ),
                               ),
@@ -109,13 +113,17 @@ class _menuWidgetState extends State<menuWidget> {
 }
 
 class DeleteMenu extends StatefulWidget {
-  const DeleteMenu({Key? key, required this.index}) : super(key: key);
+  const DeleteMenu({Key? key, required this.index, required this.buildParent})
+      : super(key: key);
   final index;
+  final Function() buildParent;
   @override
-  State<DeleteMenu> createState() => _DeleteMenuState();
+  State<DeleteMenu> createState() => _DeleteMenuState(buildParent: buildParent);
 }
 
 class _DeleteMenuState extends State<DeleteMenu> {
+  _DeleteMenuState({required this.buildParent});
+  final Function() buildParent;
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> tempMenuItem = menu.menu[widget.index];
@@ -151,16 +159,16 @@ class _DeleteMenuState extends State<DeleteMenu> {
                 '${tempMenuItem['name']}',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Colors.teal,
+                  color: cols,
                   fontSize: 20,
                 ),
               ),
               Flexible(child: Container()),
-              const Text(
+              Text(
                 'Confirm Delete This Item?',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Colors.teal,
+                  color: cols,
                   fontSize: 20,
                 ),
               ),
@@ -187,6 +195,7 @@ class _DeleteMenuState extends State<DeleteMenu> {
                         PageRouteBuilder(
                           pageBuilder: (context, animation1, animation2) =>
                               TableView(
+                            buildParent: buildParent,
                             currentPage: 1,
                           ),
                           transitionDuration: Duration.zero,
@@ -214,13 +223,17 @@ var _itemname = TextEditingController();
 var _itemprice = TextEditingController();
 
 class EditMenu extends StatefulWidget {
-  const EditMenu({Key? key, required this.index}) : super(key: key);
+  const EditMenu({Key? key, required this.index, required this.buildParent})
+      : super(key: key);
+  final Function() buildParent;
   final index;
   @override
-  State<EditMenu> createState() => _EditMenuState();
+  State<EditMenu> createState() => _EditMenuState(buildParent: buildParent);
 }
 
 class _EditMenuState extends State<EditMenu> {
+  _EditMenuState({required this.buildParent});
+  final Function() buildParent;
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> tempMenuItem = menu.menu[widget.index];
@@ -258,9 +271,9 @@ class _EditMenuState extends State<EditMenu> {
               Flexible(child: Container(), flex: 1),
               Text(
                 '\n${tempMenuItem['name']}',
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Colors.teal,
+                  color: cols,
                   fontSize: 20,
                 ),
               ),
@@ -340,6 +353,7 @@ class _EditMenuState extends State<EditMenu> {
                         PageRouteBuilder(
                           pageBuilder: (context, animation1, animation2) =>
                               TableView(
+                                buildParent: buildParent,
                             currentPage: 1,
                           ),
                           transitionDuration: Duration.zero,

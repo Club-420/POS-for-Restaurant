@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pos/auth/auth_exceptions.dart';
 import 'package:pos/auth/auth_service.dart';
 import 'package:pos/constants/routes.dart';
+import 'package:pos/constants/test_data.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
@@ -36,6 +37,7 @@ class _RegisterViewState extends State<RegisterView> {
     return Scaffold(
         // resizeToAvoidBottomInset: false,
         appBar: AppBar(
+          backgroundColor: cols,
           title: const Text(
             'Sign Up',
           ),
@@ -55,25 +57,26 @@ class _RegisterViewState extends State<RegisterView> {
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Flexible(
+              Flexible(
                 child: Center(
                   child: Padding(
                     padding: EdgeInsets.all(10.0),
                     child: Text(
                       'Create an Account',
-                      style: TextStyle(color: Colors.teal, fontSize: 20),
+                      style: TextStyle(color: cols, fontSize: 20),
                     ),
                   ),
                 ),
                 flex: 2,
               ),
               Padding(
-                padding: const EdgeInsets.all(10),
+                padding:  EdgeInsets.all(10),
                 child: TextField(
                   controller: _email,
                   autocorrect: false,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                  decoration:  InputDecoration(
+                      focusColor: cols,
+                      border:const  OutlineInputBorder(),
                       labelText: 'email',
                       hintText: 'Enter your email here.'),
                 ),
@@ -84,7 +87,8 @@ class _RegisterViewState extends State<RegisterView> {
                   controller: _password1,
                   autocorrect: false,
                   obscureText: true,
-                  decoration: const InputDecoration(
+                  decoration:  InputDecoration(
+                    fillColor: cols,
                       border: OutlineInputBorder(),
                       labelText: 'password',
                       hintText: 'Create a secure password.'),
@@ -96,8 +100,9 @@ class _RegisterViewState extends State<RegisterView> {
                   controller: _password2,
                   autocorrect: false,
                   obscureText: true,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                  decoration:  InputDecoration(
+                    hoverColor: cols,
+                      border:const OutlineInputBorder(),
                       labelText: 'confirm password',
                       hintText: 'Re-enter your password.'),
                 ),
@@ -106,7 +111,7 @@ class _RegisterViewState extends State<RegisterView> {
                 width: 250,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: Colors.teal,
+                  color: cols,
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: TextButton(

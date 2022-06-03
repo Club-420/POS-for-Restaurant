@@ -25,8 +25,8 @@ void main() {
     // DeviceOrientation.landscapeRight,
     DeviceOrientation.portraitDown,
     DeviceOrientation.portraitUp,
-  ]).then((value) => runApp(const MyApp()));
-  runApp(const MyApp());
+  ]).then((value) => runApp( MyApp()));
+  runApp( MyApp());
 }
 
 //our homepage
@@ -61,8 +61,21 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+var pageRouteIndex = 0;
+
+class MyApp extends StatefulWidget {
+  MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  void refresh() {
+    pageRouteIndex++;
+    setState(() {
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,9 +83,16 @@ class MyApp extends StatelessWidget {
       title: 'Cafe',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.teal,
+        appBarTheme: AppBarTheme(color: cols),
+        textTheme: Theme.of(context).textTheme.apply(
+              bodyColor: cols, //<-- SEE HERE
+              displayColor: cols,
+            ),
       ),
-      home: const HomePage(),
+      home: pageRouteIndex==0 ?TableView(
+              buildParent: refresh,
+            ): const HomePage(),
+      themeMode: ThemeMode.light,
       routes: {
         mainRoute: (context) => const RouteView(),
         registerRoute: (context) => const RegisterView(),
@@ -81,7 +101,9 @@ class MyApp extends StatelessWidget {
         waiterRoute: (context) => const WorkersView(),
         kitchenRoute: (context) => const KitchenView(),
         adminRoute: (context) => const AdminView(),
-        tableRoute: (context) => TableView(),
+        tableRoute: (context) => TableView(
+              buildParent: refresh,
+            ),
       },
     );
   }

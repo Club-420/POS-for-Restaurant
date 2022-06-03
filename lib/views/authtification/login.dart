@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pos/auth/auth_exceptions.dart';
 import 'package:pos/auth/auth_service.dart';
 import 'package:pos/constants/routes.dart';
+import 'package:pos/constants/test_data.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -34,7 +35,9 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: AppBar(
+        // backgroundColor: cols,
         title: const Text("Login Page"),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
@@ -105,7 +108,7 @@ class _LoginViewState extends State<LoginView> {
             width: 250,
             height: 50,
             decoration: BoxDecoration(
-              color: Colors.teal,
+              color: cols,
               borderRadius: BorderRadius.circular(50),
             ),
             child: TextButton(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pos/auth/auth_service.dart';
 import 'package:pos/constants/routes.dart';
+import 'package:pos/constants/test_data.dart';
 
 class VerifyView extends StatefulWidget {
   const VerifyView({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class _VerifyViewState extends State<VerifyView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: cols,
         elevation: 0,
       ),
       body: Column(
@@ -39,9 +40,9 @@ class _VerifyViewState extends State<VerifyView> {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 color: Colors.white,
-                boxShadow: const [
+                boxShadow:  [
                   BoxShadow(
-                    color: Colors.teal,
+                    color: cols,
                     offset: Offset(0, 1),
                     blurRadius: 6,
                   )
@@ -85,7 +86,7 @@ Still can't find the email?
                   ),
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.teal),
+                        MaterialStateProperty.all<Color>(cols),
                   ),
                 ),
                 const Spacer(),

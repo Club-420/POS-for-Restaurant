@@ -161,7 +161,7 @@ int indexess=0;
                                                                 500
                                                             ? 20
                                                             : 10,
-                                                    color: Colors.teal,
+                                                    color: cols,
                                                   ),
                                                 ),
                                                 Text(
@@ -174,7 +174,7 @@ int indexess=0;
                                                                 500
                                                             ? 20
                                                             : 10,
-                                                    color: Colors.teal,
+                                                    color: cols,
                                                   ),
                                                 ),
                                               ],
@@ -366,7 +366,7 @@ int indexess=0;
                                                         '${snapshot.data?.docs[index].id}',
                                                         // '${tableSchema.tables[widget.index].foods[index]['name']}',
                                                         style: TextStyle(
-                                                          color: Colors.teal,
+                                                          color: cols,
                                                           fontSize: MediaQuery.of(
                                                                           context)
                                                                       .size
@@ -390,7 +390,7 @@ int indexess=0;
                                                         '${snapshot.data?.docs[index]['noOfItem']}',
                                                         // '   ${tableSchema.tables[widget.index].howMuch(tableSchema.tables[widget.index].foods[index]['name'])}',
                                                         style: TextStyle(
-                                                          color: Colors.teal,
+                                                          color: cols,
                                                           fontSize: MediaQuery.of(
                                                                           context)
                                                                       .size
@@ -415,7 +415,7 @@ int indexess=0;
                                                         '${snapshot.data?.docs[index]['price']}',
                                                         // '  ${tableSchema.tables[widget.index].getItemTotalPrice(foodName: tableSchema.tables[widget.index].foods[index]['name'])}',
                                                         style: TextStyle(
-                                                          color: Colors.teal,
+                                                          color: cols,
                                                           fontSize: MediaQuery.of(
                                                                           context)
                                                                       .size
@@ -460,26 +460,7 @@ int indexess=0;
                         flex: 2,
                         child: Container(
                           height: 50,
-                          color: Colors.teal,
-                          child: ListView.builder(
-                              itemCount: Categories.length,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: ((context, index) {
-                                
-                                return InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      
-                                    indexess = index;
-                                    });
-                                  },
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width/4,
-                                      color: index==indexess? Colors.white:Colors.teal,
-                                      margin: EdgeInsets.fromLTRB(5, 0, 8, 5),
-                                      child: Text('${Categories[index]}')),
-                                );
-                              })),
+                          color: cols,
                         ),
                       ),
                       Flexible(

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pos/views/admin/notifications.dart';
+import 'package:pos/constants/test_data.dart';
+
+
 
 class Pdfview extends StatefulWidget {
   const Pdfview({Key? key}) : super(key: key);
@@ -14,6 +17,7 @@ class _PdfviewState extends State<Pdfview> {
    
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: cols,
         title: Text('Table'),
         centerTitle: true,
       ),
@@ -45,7 +49,7 @@ class _billwidgetState extends State<billwidget> {
                   itemCount: 20,
                   itemBuilder: ((context, index) {
                     return Container(
-                      color: index == indexes ? Colors.white : Colors.teal,
+                      color: index == indexes ? Colors.white : cols,
                       child: TextButton(
                         onPressed: ()async {
                            await   NotificationService().showNotification(1, 'd', 'ds');
