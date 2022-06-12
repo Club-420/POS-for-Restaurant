@@ -3,6 +3,9 @@ import 'package:pos/constants/test_data.dart';
 import 'package:pos/views/admin/notifications.dart';
 import 'package:pos/views/waiters/tables.dart';
 
+var indexess = 0;
+List all = [];
+
 class menuWidget extends StatefulWidget {
   const menuWidget({Key? key, required this.buildParent}) : super(key: key);
   final Function() buildParent;
@@ -15,100 +18,152 @@ class _menuWidgetState extends State<menuWidget> {
   _menuWidgetState({required this.buildParent});
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: menu.populateMenu(),
-        builder: (context, snapshot) {
-          return Container(
-            child: GridView.builder(
-                itemCount: menu.menu.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 5,
-                ),
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.white,
-                      border: Border.all(color: Colors.grey, width: 1.5),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                               
-                                showDialog(
-                                    context: context,
-                                    builder: (context) => EditMenu(
-                                      buildParent: buildParent,
-                                          index: index,
-                                        ));
-                              },
-                              icon: Icon(
-                                Icons.edit,
-                                color: cols,
-                                size: 20,
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                               
-                                showDialog(
-                                    context: context,
-                                    builder: (context) => DeleteMenu(
-                                          index: index,
-                                          buildParent: buildParent,
-                                        ));
-                              },
-                              icon: Icon(
-                                Icons.delete,
-                                color: cols,
-                                size: 20,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const FittedBox(
-                          child: Image(
-                            alignment: Alignment.center,
-                            width: 80,
-                            height: 80,
-                            image: AssetImage(
-                              'asset/images/loginView_logo.png',
-                            ),
+    setState(() {});
+    return Row(
+      children: [
+        Flexible(
+          flex: 1,
+          child: Container(
+            width: 80,
+            color: cols,
+            child: ListView.builder(
+                itemCount: Categories.length,
+                scrollDirection: Axis.vertical,
+                itemBuilder: ((context, index) {
+                  return InkWell(
+                    onTap: () {
+                      setState(() {
+                        indexess = index;
+                        all.clear();
+                        for (var item in menu.menu) {
+                          if (Categories[indexess] == item['category']) {
+                            all.add(item);
+                          } else if (Categories[indexess] == 'All') {
+                            all.add(item);
+                          }
+                        }
+                      });
+                    },
+                    child: Container(
+                        width: MediaQuery.of(context).size.width / 4,
+                        color: index == indexess ? Colors.white : cols,
+                        margin: EdgeInsets.fromLTRB(5, 0, 8, 5),
+                        child: Text(
+                          '${Categories[index]}',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: index == indexess ? cols : Colors.white,
+                            fontSize: 15,
                           ),
-                        ),
-                        FittedBox(
-                          child: Column(
-                            children: [
-                              Text(
-                                '   ${menu.menu[index]['name']}',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: cols,
-                                  fontSize: 15,
-                                ),
-                              ),
-                              Text(
-                                'Rs ${menu.menu[index]['price']}        \n',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: cols,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
+                        )),
                   );
-                }),
-          );
-        });
+                })),
+          ),
+        ),
+        Flexible(
+          flex: 3,
+          child: FutureBuilder(
+              future: menu.populateMenu(),
+              builder: (context, snapshot) {
+                return Container(
+                  child: GridView.builder(
+                      itemCount: all.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount:
+                            MediaQuery.of(context).size.width > 600 ? 5 : 2,
+                      ),
+                      itemBuilder: (context, index) {
+                        return FittedBox(
+                          child: Container(
+                            height: 200,
+                            width: 200,
+                            margin: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.white,
+                              border:
+                                  Border.all(color: Colors.grey, width: 1.5),
+                            ),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) => EditMenu(
+                                                  buildParent: buildParent,
+                                                  index: index,
+                                                ));
+                                      },
+                                      icon: Icon(
+                                        Icons.edit,
+                                        color: cols,
+                                        size: 20,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) => DeleteMenu(
+                                                  index: index,
+                                                  buildParent: buildParent,
+                                                ));
+                                      },
+                                      icon: Icon(
+                                        Icons.delete,
+                                        color: cols,
+                                        size: 20,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                FittedBox(
+                                  child: Image(
+                                    alignment: Alignment.center,
+                                    width: 80,
+                                    height: 80,
+                                    image: AssetImage(
+                                      'asset/images/loginView_logo.png',
+                                    ),
+                                  ),
+                                ),
+                                FittedBox(
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        '   ${all[index]['name']}',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: cols,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Rs ${all[index]['price']}        \n',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: cols,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      }),
+                );
+              }),
+        ),
+      ],
+    );
   }
 }
 
@@ -353,7 +408,7 @@ class _EditMenuState extends State<EditMenu> {
                         PageRouteBuilder(
                           pageBuilder: (context, animation1, animation2) =>
                               TableView(
-                                buildParent: buildParent,
+                            buildParent: buildParent,
                             currentPage: 1,
                           ),
                           transitionDuration: Duration.zero,

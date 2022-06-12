@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pos/views/admin/notifications.dart';
+// import 'package:pos/views/admin/notifications.dart';
 import 'package:pos/constants/test_data.dart';
 
 
@@ -52,7 +52,7 @@ class _billwidgetState extends State<billwidget> {
                       color: index == indexes ? Colors.white : cols,
                       child: TextButton(
                         onPressed: ()async {
-                           await   NotificationService().showNotification(1, 'd', 'ds');
+                        
                           setState(() {
                          
                             indexes = index;

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pos/views/waiters/menu.dart';
-import 'package:pos/views/waiters/ordermenu.dart';
+// import 'package:pos/views/waiters/ordermenu.dart';
 import 'package:pos/views/waiters/tables.dart';
 import '../../constants/routes.dart';
 import '../../constants/test_data.dart';
@@ -18,10 +18,10 @@ class IndividualTable extends StatefulWidget {
 class _IndividualTableState extends State<IndividualTable> {
   num totalBill = 0;
   num itemcount = 0;
-int indexess=0;
 
   @override
   Widget build(BuildContext context) {
+    
     bool checked = tableSchema.isOccupied(index: widget.index);
     return FutureBuilder(
       future: tableSchema.getSingleTable(index: widget.index),
@@ -127,7 +127,7 @@ int indexess=0;
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 4,
                               ),
-                              itemCount: menu.menu.length,
+                              itemCount: all.length,
                               itemBuilder: (context, index) {
                                 return Container(
                                   margin: const EdgeInsets.all(5),
@@ -152,7 +152,7 @@ int indexess=0;
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  '${menu.menu[index]['name']}',
+                                                  '${all[index]['name']}',
                                                   style: TextStyle(
                                                     fontSize:
                                                         MediaQuery.of(context)
@@ -165,7 +165,7 @@ int indexess=0;
                                                   ),
                                                 ),
                                                 Text(
-                                                  '  Rs. ${menu.menu[index]['price']}',
+                                                  '  Rs. ${all[index]['price']}',
                                                   style: TextStyle(
                                                     fontSize:
                                                         MediaQuery.of(context)
@@ -188,10 +188,10 @@ int indexess=0;
                                       if (tableSchema.isOccupied(
                                           index: widget.index)) {
                                         tableSchema.add(
-                                            itemPrice: menu.menu[index]
+                                            itemPrice: all[index]
                                                 ['price'],
                                             index: widget.index,
-                                            foodName: menu.menu[index]['name']);
+                                            foodName: all[index]['name']);
                                       }
                                     },
                                   ),
@@ -461,6 +461,42 @@ int indexess=0;
                         child: Container(
                           height: 50,
                           color: cols,
+                         
+
+            child: ListView.builder(
+                itemCount: Categories.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: ((context, index) {
+                  return InkWell(
+                    onTap: () {
+                      setState(() {
+                        indexess = index;
+                        all.clear();
+                        for (var item in menu.menu) {
+                          if (Categories[indexess] == item['category']) {
+                            all.add(item);
+                          } else if (Categories[indexess] == 'All') {
+                            all.add(item);
+                          }
+                        }
+                      });
+                    },
+                    child: Container(
+                        width: MediaQuery.of(context).size.width / 4,
+                        color: index == indexess ? Colors.white : cols,
+                        margin: EdgeInsets.fromLTRB(5, 0, 8, 5),
+                        child: Center(
+                          child: Text(
+                            '${Categories[index]}',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: index == indexess ? cols : Colors.white,
+                              fontSize: 15,
+                            ),
+                          ),
+                        )),
+                  );
+                })),
                         ),
                       ),
                       Flexible(
